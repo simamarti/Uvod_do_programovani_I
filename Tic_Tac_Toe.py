@@ -1,5 +1,4 @@
-from curses import window
-from turtle import forward, right, left, exitonclick, setpos, setposition, speed, window_height, window_width
+from turtle import down, forward, right, left, exitonclick, goto, speed, up, window_height, window_width
 
 def draw_Square():      # Začíná nahoře vlevo
     
@@ -15,6 +14,10 @@ def draw_Square():      # Začíná nahoře vlevo
 def draw(row, column):
 
     speed(10)
+
+    up()
+    goto(-window_width()/2, window_height()/2)
+    down()
 
     for i in range(row):
 
@@ -47,11 +50,18 @@ def Input():
 
         print("Číslo je příliš velké.")
 
-    if (row <= 0 OR column <= 0)
+    if row <= 0 or column <= 0:
 
         print("Číslo musí být kladné.")
+        row = 0
+        column = 0
 
     return (row, column)
+
+def Centers(row, column):
+
+    pass
+row, column = Input()
 
 draw(row, row)
 
