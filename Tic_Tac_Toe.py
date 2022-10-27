@@ -101,6 +101,17 @@ def centers(row, column):
 
     return centers
 
+def is_Digit(number):
+
+    if number.isdigit():
+
+            if int(number) < 1 or int(number) > row:
+
+                return True
+        
+    print("Špatný formát vstupu, zkuste to znovu.")
+    return False 
+
 def move(player):   # dotaz (cyklus), posun
 
     while(True):
@@ -112,25 +123,20 @@ def move(player):   # dotaz (cyklus), posun
         string = input("Hraje hráč č. " + str(player) + ": ")
         splitted = string.split(",")
 
-        if splitted[0].isdigit():
-
-            if int(splitted[0]) < 1 or int(splitted[0]) > row:
+        if is_Digit(splitted[0]):
                 
-                coord_x = int(splitted[0]) - 1
-                check += 1
+            coord_x = int(splitted[0]) - 1
+            check += 1
 
-        if splitted[1].isdigit():
-
-            if int(splitted[1]) < 1 or int(splitted[1]) > column:
+        if is_Digit(splitted[1]):
                 
-                coord_x = int(splitted[1]) - 1
-                check += 1
+            coord_x = int(splitted[1]) - 1
+            check += 1
 
         if check == 2:
 
-            return 
+            break
 
-    
     up()
     goto(centers[coord_x][coord_y])
     down()
