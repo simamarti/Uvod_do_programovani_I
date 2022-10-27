@@ -1,3 +1,4 @@
+from sys import maxsize
 from turtle import begin_fill, circle, color, down, fillcolor, forward, hideturtle, pos, right, left, exitonclick, goto, speed, up, width, window_height, window_width
 
 def draw_Square():      # Začíná nahoře vlevo
@@ -34,53 +35,33 @@ def draw(row, column):
     
     hideturtle()
 
+def input_check(number):
+
+    if number == "":
+
+        print("Nebylo nic zadano")
+        return False
+
+    if is_Digit(number, maxsize):
+            
+        return True
+    
+    return False
+
+def query(string):
+
+    while(True):
+
+        expression = input("Kolik políček by měla mít hrací plocha na " + string + ": ")
+
+        if input_check(expression):
+
+            number = int(expression)
+            return number
+
 def set_size():
 
-    row = None
-    column = None
-
-    try:
-        
-        number = input("Kolik políček by měla mít hrací plocha na výšku: ")
-
-        if number == "":
-
-            print("Nebylo nic zadano")
-            return (None, None)
-
-        row = int(number)
-
-        if row <= 0:
-
-            print("Číslo musí být kladné.")
-            return (None, None)
-
-        number = ""
-        number = input("Kolik políček by měla mít hrací plocha na šířku: ")
-
-        if number == "":
-
-            print("Nebylo nic zadano")
-            return (None, None)
-
-        column = int(number)
-
-        if column <= 0:
-
-            print("Číslo musí být kladné.")
-            return (None, None)
-
-    except ValueError:
-
-        print("Měl jste vložit číslo.")
-        return (None, None)
-
-    except OverflowError:
-
-        print("Číslo je příliš velké.")
-        return (None, None)
-
-    return (row, column)
+    return query("výšku"), query("šířku")
 
 def centers(row, column):
 
@@ -101,18 +82,18 @@ def centers(row, column):
 
     return centers
 
-def is_Digit(number):
+def is_Digit(number, limit):
 
     if number.isdigit():
 
-            if int(number) < 1 or int(number) > row:
+        if int(number) > 0 and int(number) <= limit:
 
-                return True
+            return True
         
-    print("Špatný formát vstupu, zkuste to znovu.")
+    print("Špatný formát vstupu, vstup musí být kladné přirozené číslo v intervalu <0, " + str(limit) + ">. Zkuste to znovu.")
     return False 
 
-def shift(player):   # dotaz (cyklus), posun
+def shift(player, centers, fill, row, column):   # dotaz (cyklus), posun
 
     while(True):
 
@@ -122,38 +103,48 @@ def shift(player):   # dotaz (cyklus), posun
 
         string = input("Hraje hráč č. " + str(player + 1) + ": ")
         splitted = string.split(",")
-        print("<<" + str(splitted[0]) + "," + str(splitted[1]) + ">>")
-        if is_Digit(splitted[0]):
+
+        if len(splitted) != 2:
+
+            print("Špatný formát vstupu, zadejte souřadnice ve formátu \"x, y\".")
+            continue
+
+        if is_Digit(splitted[0], row) and is_Digit(splitted[1], column):
             
             coord_x = int(splitted[0]) - 1
-            check += 1
+            coord_y = int(splitted[1]) - 1
+        
+        else:
+
             continue
 
-        if is_Digit(splitted[1]):
-                
-            coord_x = int(splitted[1]) - 1
-            check += 1
-            continue
+        if fill[coord_x][coord_y] == 0:
 
-        if check == 2:
-
+            fill[coord_x][coord_y] = 1
             break
+            
+        else:
+
+            print("Políčko je již obsazeno.")
+            continue
 
     up()
     goto(centers[coord_x][coord_y])
     down()
 
+    return fill
+
 def sign(player):
 
     if player == 1:
 
-        color("red", "red")
+        color("red")
         begin_fill()
         circle(25)
     
     else:
 
-        color("blue", "blue")
+        color("blue")
         begin_fill()
         up()
         goto(pos()[0], pos()[1] + 25)
@@ -176,10 +167,11 @@ def game(centers, fill, row, column):
     move = 1
 
     while move <= row*column:
-
+        print(fill)
         if player == 0:
 
-            shift(player)
+            fill = shift(player, centers, fill, row, column)
+            print(fill)
             sign(player)
 
             player = 1
@@ -187,7 +179,8 @@ def game(centers, fill, row, column):
 
         else:
 
-            shift(player)
+            fill = shift(player, centers, fill, row, column)
+            print(fill)
             sign(player)
 
             player = 0
