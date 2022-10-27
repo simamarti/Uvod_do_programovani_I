@@ -34,7 +34,7 @@ def draw(row, column):
     
     hideturtle()
 
-def input():
+def set_size():
 
     row = None
     column = None
@@ -56,7 +56,7 @@ def input():
             return (None, None)
 
         number = ""
-        number = input("KOlik políček by měla mít hrací plocha na šířku: ")
+        number = input("Kolik políček by měla mít hrací plocha na šířku: ")
 
         if number == "":
 
@@ -112,7 +112,7 @@ def is_Digit(number):
     print("Špatný formát vstupu, zkuste to znovu.")
     return False 
 
-def move(player):   # dotaz (cyklus), posun
+def shift(player):   # dotaz (cyklus), posun
 
     while(True):
 
@@ -120,18 +120,20 @@ def move(player):   # dotaz (cyklus), posun
         coord_y = 0
         check = 0
 
-        string = input("Hraje hráč č. " + str(player) + ": ")
+        string = input("Hraje hráč č. " + str(player + 1) + ": ")
         splitted = string.split(",")
-
+        print("<<" + str(splitted[0]) + "," + str(splitted[1]) + ">>")
         if is_Digit(splitted[0]):
-                
+            
             coord_x = int(splitted[0]) - 1
             check += 1
+            continue
 
         if is_Digit(splitted[1]):
                 
             coord_x = int(splitted[1]) - 1
             check += 1
+            continue
 
         if check == 2:
 
@@ -177,7 +179,7 @@ def game(centers, fill, row, column):
 
         if player == 0:
 
-            move(player)
+            shift(player)
             sign(player)
 
             player = 1
@@ -185,111 +187,23 @@ def game(centers, fill, row, column):
 
         else:
 
-            move(player)
+            shift(player)
             sign(player)
 
             player = 0
             move += 1
 
-
- '''   for i in range(r*c):
-
-        while(True):
-
-            try:
-                while(True):
-
-                    string = input("Hraje hráč č. 1: ")
-                    splitted = string.split(",")
-
-                    if int(splitted[0]) < 1 or int(splitted[0]) > r:
-
-                        continue   
-
-                    if int(splitted[1]) < 1 or int(splitted[1]) > c:
-
-                        continue  
-
-                    
-                    if fill[int(splitted[0]) - 1][int(splitted[1]) - 1] == 0:
-
-                        fill[int(splitted[0]) - 1][int(splitted[1]) - 1] = 1
-                        
-                        up()
-                        goto(centers[int(splitted[0]) - 1][int(splitted[1]) - 1])
-                        down()
-
-                        color("red", "red")
-                        begin_fill()
-                        circle(25)
-
-                        break
-
-                    else:
-                        print(">> Pole je již obsazeno.")
-                    
-                break
-
-            except:
-                print("Špatný vstup")
- 
-        while(True):
-
-            try:
-                while(True):
-
-                    string = input("Hraje hráč č. 2: ")
-                    splitted = string.split(",")
-
-                    if int(splitted[0]) < 1 or int(splitted[0]) > r:
-
-                        continue   
-
-                    if int(splitted[1]) < 1 or int(splitted[1]) > c:
-
-                        continue  
-
-                    
-                    if fill[int(splitted[0]) - 1][int(splitted[1]) - 1] == 0:
-
-                        fill[int(splitted[0]) - 1][int(splitted[1]) - 1] = 1
-                        
-                        up()
-                        goto(centers[int(splitted[0]) - 1][int(splitted[1]) - 1])
-                        down()
-
-                        color("blue", "blue")
-                        begin_fill()
-                        up()
-                        goto(pos()[0], pos()[1] + 25)
-                        down()
-                        goto(pos()[0] + 25, pos()[1] + 25)
-                        goto(pos()[0] - 50, pos()[1] - 50)
-                        goto(pos()[0] + 25, pos()[1] + 25)
-                        goto(pos()[0] - 25, pos()[1] + 25)
-                        goto(pos()[0] + 50, pos()[1] - 50)
-
-                        break
-
-                    else:
-                        print(">> Pole je již obsazeno.")
-                    
-                break
-
-            except:
-                print("Špatný vstup")
-'''
-row, column = input()
-centers = None
+row, column = set_size()
+cell_centers = None
 
 if row is not None:
     
     draw(row, column)
-    centers = Centers(row, column)
+    cell_centers = centers(row, column)
 
     fill = [[0]*row for i in range(column)]
     
-    game(centers, fill, row, column)
+    game(cell_centers, fill, row, column)
 
 
 exitonclick()
