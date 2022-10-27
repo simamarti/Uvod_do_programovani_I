@@ -1,4 +1,4 @@
-from turtle import circle, down, forward, right, left, exitonclick, goto, speed, up, window_height, window_width
+from turtle import begin_fill, circle, color, down, fillcolor, forward, hideturtle, pos, right, left, exitonclick, goto, speed, up, width, window_height, window_width
 
 def draw_Square():      # Začíná nahoře vlevo
     
@@ -32,11 +32,9 @@ def draw(row, column):
         forward(50)
         left(90)
     
-    up()
-    goto(0, 0)
-    down()
+    hideturtle()
 
-def Input():
+def input():
 
     row = None
     column = None
@@ -84,12 +82,12 @@ def Input():
 
     return (row, column)
 
-def Centers(row, column):
+def centers(row, column):
 
-    centers = [[None]*row]*column
+    centers = [[None]*row for i in range(column)]
 
     coord_x = -window_width()/2 + 25
-    coord_y = window_height()/2 - 25
+    coord_y = window_height()/2 - 50
 
     for i in range(row):
 
@@ -103,9 +101,92 @@ def Centers(row, column):
 
     return centers
 
-def Game(centers, fill, r, c):
+def move(player):   # dotaz (cyklus), posun
 
-    for i in range(r*c):
+    while(True):
+
+        coord_x = 0
+        coord_y = 0
+        check = 0
+
+        string = input("Hraje hráč č. " + str(player) + ": ")
+        splitted = string.split(",")
+
+        if splitted[0].isdigit():
+
+            if int(splitted[0]) < 1 or int(splitted[0]) > row:
+                
+                coord_x = int(splitted[0]) - 1
+                check += 1
+
+        if splitted[1].isdigit():
+
+            if int(splitted[1]) < 1 or int(splitted[1]) > column:
+                
+                coord_x = int(splitted[1]) - 1
+                check += 1
+
+        if check == 2:
+
+            return 
+
+    
+    up()
+    goto(centers[coord_x][coord_y])
+    down()
+
+def sign(player):
+
+    if player == 1:
+
+        color("red", "red")
+        begin_fill()
+        circle(25)
+    
+    else:
+
+        color("blue", "blue")
+        begin_fill()
+        up()
+        goto(pos()[0], pos()[1] + 25)
+        down()
+        goto(pos()[0] + 25, pos()[1] + 25)
+        goto(pos()[0] - 50, pos()[1] - 50)
+        goto(pos()[0] + 25, pos()[1] + 25)
+        goto(pos()[0] - 25, pos()[1] + 25)
+        goto(pos()[0] + 50, pos()[1] - 50)
+
+def game(centers, fill, row, column):
+
+    up()
+    goto(0, 0)
+    down()
+
+    width(4)
+
+    player = 0
+    move = 1
+
+    while move <= row*column:
+
+        if player == 0:
+
+            move(player)
+            sign(player)
+
+            player = 1
+            move += 1
+
+        else:
+
+            move(player)
+            sign(player)
+
+            player = 0
+            move += 1
+
+
+ '''   for i in range(r*c):
 
         while(True):
 
@@ -114,27 +195,28 @@ def Game(centers, fill, r, c):
 
                     string = input("Hraje hráč č. 1: ")
                     splitted = string.split(",")
-                    print("<" + splitted[0] + ", " + splitted[1] + ">")
+
                     if int(splitted[0]) < 1 or int(splitted[0]) > r:
 
-                        print(">> Číslo je příliš veliké, mříýka má " + str(r) + " řádků.")
                         continue   
-                    print("<" + splitted[0] + ", " + splitted[1] + ">")
+
                     if int(splitted[1]) < 1 or int(splitted[1]) > c:
 
-                        print(">> Číslo je příliš veliké, mříýka má " + str(c) + " řádků.")
                         continue  
-                    print("<" + str(fill[int(splitted[0]) - 1][int(splitted[1]) - 1]) + ">")
+
+                    
                     if fill[int(splitted[0]) - 1][int(splitted[1]) - 1] == 0:
 
                         fill[int(splitted[0]) - 1][int(splitted[1]) - 1] = 1
                         
                         up()
                         goto(centers[int(splitted[0]) - 1][int(splitted[1]) - 1])
-                        print("<" + str(centers[int(splitted[0]) - 1][int(splitted[1]) - 1]) + ">")
                         down()
-                        print(">> Tah proveden")
+
+                        color("red", "red")
+                        begin_fill()
                         circle(25)
+
                         break
 
                     else:
@@ -144,35 +226,43 @@ def Game(centers, fill, r, c):
 
             except:
                 print("Špatný vstup")
-        
+ 
         while(True):
 
             try:
                 while(True):
 
-                    string = input("Hraje hráč č. 1: ")
+                    string = input("Hraje hráč č. 2: ")
                     splitted = string.split(",")
-                    print("<" + splitted[0] + ", " + splitted[1] + ">")
+
                     if int(splitted[0]) < 1 or int(splitted[0]) > r:
 
-                        print(">> Číslo je příliš veliké, mříýka má " + str(r) + " řádků.")
                         continue   
-                    print("<" + splitted[0] + ", " + splitted[1] + ">")
+
                     if int(splitted[1]) < 1 or int(splitted[1]) > c:
 
-                        print(">> Číslo je příliš veliké, mříýka má " + str(c) + " řádků.")
                         continue  
-                    print("<" + str(fill[int(splitted[0]) - 1][int(splitted[1]) - 1]) + ">")
+
+                    
                     if fill[int(splitted[0]) - 1][int(splitted[1]) - 1] == 0:
 
                         fill[int(splitted[0]) - 1][int(splitted[1]) - 1] = 1
                         
                         up()
                         goto(centers[int(splitted[0]) - 1][int(splitted[1]) - 1])
-                        print("<" + str(centers[int(splitted[0]) - 1][int(splitted[1]) - 1]) + ">")
                         down()
-                        print(">> Tah proveden")
-                        circle(25)
+
+                        color("blue", "blue")
+                        begin_fill()
+                        up()
+                        goto(pos()[0], pos()[1] + 25)
+                        down()
+                        goto(pos()[0] + 25, pos()[1] + 25)
+                        goto(pos()[0] - 50, pos()[1] - 50)
+                        goto(pos()[0] + 25, pos()[1] + 25)
+                        goto(pos()[0] - 25, pos()[1] + 25)
+                        goto(pos()[0] + 50, pos()[1] - 50)
+
                         break
 
                     else:
@@ -182,9 +272,8 @@ def Game(centers, fill, r, c):
 
             except:
                 print("Špatný vstup")
-        
-        
-row, column = Input()
+'''
+row, column = input()
 centers = None
 
 if row is not None:
@@ -192,9 +281,9 @@ if row is not None:
     draw(row, column)
     centers = Centers(row, column)
 
-    fill = [[0]*row]*column
-
-    Game(centers, fill, row, column)
+    fill = [[0]*row for i in range(column)]
+    
+    game(centers, fill, row, column)
 
 
 exitonclick()
