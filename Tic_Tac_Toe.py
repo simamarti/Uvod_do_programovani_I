@@ -6,7 +6,7 @@ def draw_Square():
     '''
         Funkce vykreslí čtverec o hraně 50 px
         Vykreslování začína vlevo nahoře
-        Vstupní parametry: žádně
+        Vstupní parametry: žádné
         Návratová hodnota: žádná
     '''
     forward(50)
@@ -95,7 +95,7 @@ def set_size():
 
     '''
         Funkce vrátí velikost hrací plochy
-        Vstupní parametry: žádně
+        Vstupní parametry: žádné
         Návratová hodnota:
             tuple - výška a šířka hracího pole
     '''
