@@ -1,5 +1,5 @@
 from sys import maxsize
-from turtle import begin_fill, circle, color, down, fillcolor, forward, hideturtle, pos, right, left, exitonclick, goto, speed, up, width, window_height, window_width
+from turtle import begin_fill, circle, color, down, fillcolor, forward, hideturtle, pos, right, left, exitonclick, goto, speed, title, up, width, window_height, window_width
 
 def draw_Square():
 
@@ -259,7 +259,7 @@ def game(centers, fill, row, column):
 
     player = 0
     move = 1
-
+    print("Zadávejte souřadnice ve formátu číslo řádku, číslo sloupce. Např. \"2,1\" (řádek číslo 2 a sloupec číslo 1).\n")
     while move <= row*column:
   
         if player == 0:
@@ -282,6 +282,7 @@ def game(centers, fill, row, column):
 
 row, column = set_size()
 cell_centers = None
+title("Piškvorky")
 
 draw(row, column)
 cell_centers = centers(row, column)
