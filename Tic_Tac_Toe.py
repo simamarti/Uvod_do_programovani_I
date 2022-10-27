@@ -1,8 +1,14 @@
 from sys import maxsize
 from turtle import begin_fill, circle, color, down, fillcolor, forward, hideturtle, pos, right, left, exitonclick, goto, speed, up, width, window_height, window_width
 
-def draw_Square():      # Začíná nahoře vlevo
-    
+def draw_Square():
+
+    '''
+        Funkce vykreslí čtverec o hraně 50 px
+        Vykreslování začína vlevo nahoře
+        Vstupní parametry: žádně
+        Návratová hodnota: žádná
+    '''
     forward(50)
     right(90)
     forward(50)
@@ -13,6 +19,15 @@ def draw_Square():      # Začíná nahoře vlevo
     right(90)
 
 def draw(row, column):
+
+    '''
+        Funkce vykreslí čtvercovou síť o zadaných rozměrech
+        Vykreslování začína vlevo nahoře
+        Vstupní parametry:
+            row (počet řádků v síti)
+            column (počet sloupců v síti)
+        Návratová hodnota: žádná
+    '''
 
     speed(10)
 
@@ -36,6 +51,15 @@ def draw(row, column):
     hideturtle()
 
 def input_check(number):
+ 
+    '''
+        Funkce kontroluje, zda je zadaný řetězec číslo
+        Vstupní parametry:
+            nummber (řetězec)
+        Návratová hodnota: bool
+            True - řetězec je číslo
+            False - řetězec není číslo
+    '''
 
     if number == "":
 
@@ -50,6 +74,14 @@ def input_check(number):
 
 def query(string):
 
+    '''
+        Funkce žádá uživatele aby zadal velikost hrací plochy
+        Vstupní parametry:
+            string (řetězec)
+        Návratová hodnota:
+            number (Integer)
+
+    '''
     while(True):
 
         expression = input("Kolik políček by měla mít hrací plocha na " + string + ": ")
@@ -61,9 +93,25 @@ def query(string):
 
 def set_size():
 
+    '''
+        Funkce vrátí velikost hrací plochy
+        Vstupní parametry: žádně
+        Návratová hodnota:
+            tuple - výška a šířka hracího pole
+    '''
+
     return query("výšku"), query("šířku")
 
 def centers(row, column):
+
+    '''
+        Funkce vypočítá středy spodní hrany jednotlivých políček
+        Vstupní parametry:
+            row (počet políček sítě na výšku)
+            column (počet políček na šířku)
+        Návratová hodnota:
+            2D pole se soiřadnicemi bodů (tuple)
+    '''
 
     centers = [[None]*row for i in range(column)]
 
@@ -84,22 +132,47 @@ def centers(row, column):
 
 def is_Digit(number, limit):
 
-    if number.isdigit():
+    '''
+        Funkce kontroluje je řetězec kladné přirozené číslo v příslučném intervalu
+        Vstupní parametry:
+            number (řetězec)
+            limit (maximální hodnota, které může číslo mabývat - rozměry sítě/interní maximální velikost proměnné)
+        Návratová hodnota: bool
+            True - řetězec je číslo
+            False - řetězec není číslo
+    '''
 
-        if int(number) > 0 and int(number) <= limit:
+    if number.isdecimal():
+        
+        if int(number) <= limit:
 
             return True
         
     print("Špatný formát vstupu, vstup musí být kladné přirozené číslo v intervalu <0, " + str(limit) + ">. Zkuste to znovu.")
     return False 
+ 
+def shift(player, centers, fill, row, column):
 
-def shift(player, centers, fill, row, column):   # dotaz (cyklus), posun
+    '''
+        Funkce se ptá uživatele na souřadnice a přesouvá želvu na příslušnou souřadnici
+        Vstupní parametry:
+            player: hodnota 0, 1
+                0 - červený kroužek (začíná)
+                1 - modrý křážek
+            centers (2D pole se souřadnicemi středů spodních hran buněk)
+            fill (2D pole se informacemi o obsazenosti buněk)
+                0 - volno
+                1 - obsazeno
+            row (počet řádků sítě)
+            column (počet sloupců sítě)
+        Návratová hodnota:
+            fill - aktualizované 2D pole obsazenosti
+    '''
 
     while(True):
 
         coord_x = 0
         coord_y = 0
-        check = 0
 
         string = input("Hraje hráč č. " + str(player + 1) + ": ")
         splitted = string.split(",")
@@ -136,7 +209,16 @@ def shift(player, centers, fill, row, column):   # dotaz (cyklus), posun
 
 def sign(player):
 
-    if player == 1:
+    '''
+        Funkce vykreslí značku příslušného hráče (0 - červené kolečko, 1 - modrý křížek)
+        Vstupní parametry:
+            player: hodnota 0, 1
+                0 - červený kroužek (začíná)
+                1 - modrý křážek
+        Návratová hodnota: žádná
+    '''
+
+    if player == 0:
 
         color("red")
         begin_fill()
@@ -157,6 +239,18 @@ def sign(player):
 
 def game(centers, fill, row, column):
 
+    '''
+        Funkce se nastřídačku ptát jednotlivých hráčů na souřadnice a zakresluje je do sítě
+        Vstupní parametry:
+            centers (2D pole se souřadnicemi středů spodních hran buněk)
+            fill (2D pole se informacemi o obsazenosti buněk)
+                0 - volno
+                1 - obsazeno
+            row (počet řádků sítě)
+            column (počet sloupců sítě)
+        Návratová hodnota: žádná
+    '''
+
     up()
     goto(0, 0)
     down()
@@ -167,11 +261,10 @@ def game(centers, fill, row, column):
     move = 1
 
     while move <= row*column:
-        print(fill)
+  
         if player == 0:
 
             fill = shift(player, centers, fill, row, column)
-            print(fill)
             sign(player)
 
             player = 1
@@ -180,23 +273,21 @@ def game(centers, fill, row, column):
         else:
 
             fill = shift(player, centers, fill, row, column)
-            print(fill)
             sign(player)
 
             player = 0
             move += 1
 
+    print("Hra skončila.")
+
 row, column = set_size()
 cell_centers = None
 
-if row is not None:
-    
-    draw(row, column)
-    cell_centers = centers(row, column)
+draw(row, column)
+cell_centers = centers(row, column)
 
-    fill = [[0]*row for i in range(column)]
+fill = [[0]*row for i in range(column)]
     
-    game(cell_centers, fill, row, column)
-
+game(cell_centers, fill, row, column)
 
 exitonclick()
