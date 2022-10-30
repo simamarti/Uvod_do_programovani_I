@@ -5,7 +5,7 @@ def draw_Square():
 
     '''
         Funkce vykreslí čtverec o hraně 50 px
-        Vykreslování začína vlevo nahoře
+        Vykreslování začíná vlevo nahoře
         Vstupní parametry: žádné
         Návratová hodnota: žádná
     '''
@@ -22,10 +22,10 @@ def draw(row, column):
 
     '''
         Funkce vykreslí čtvercovou síť o zadaných rozměrech
-        Vykreslování začína vlevo nahoře
+        Vykreslování začíná vlevo nahoře
         Vstupní parametry:
-            row (počet řádků v síti)
-            column (počet sloupců v síti)
+            row – počet řádků v síti
+            column – počet sloupců v síti
         Návratová hodnota: žádná
     '''
 
@@ -79,7 +79,7 @@ def input_check(number):
     '''
         Funkce kontroluje, zda je zadaný řetězec číslo
         Vstupní parametry:
-            nummber (řetězec)
+            number (řetězec)
         Návratová hodnota: bool
             True - řetězec je číslo
             False - řetězec není číslo
@@ -87,10 +87,10 @@ def input_check(number):
 
     if number == "":
 
-        print("Nebylo nic zadano")
+        print(">> Nebylo nic zadano")
         return False
 
-    if is_Digit(number, maxsize):
+    if is_Digit(number, 3, maxsize):
             
         return True
     
@@ -99,16 +99,15 @@ def input_check(number):
 def query(string):
 
     '''
-        Funkce žádá uživatele aby zadal velikost hrací plochy
+        Funkce žádá uživatele, aby zadal velikost hrací plochy
         Vstupní parametry:
             string (řetězec)
         Návratová hodnota:
-            number (Integer)
-
+            vstupní řetězec převedený na Integer
     '''
     while(True):
 
-        expression = input("Kolik políček by měla mít hrací plocha na " + string + ": ")
+        expression = input(">> Kolik políček by měla mít hrací plocha na " + string + ", minimum jsou 3: ")
 
         if input_check(expression):
 
@@ -129,15 +128,15 @@ def set_size():
 def centers(row, column):
 
     '''
-        Funkce vypočítá středy spodní hrany jednotlivých políček
+        Funkce vypočítá středy spodní hrany jednotlivých buněk sítě
         Vstupní parametry:
-            row (počet políček sítě na výšku)
-            column (počet políček na šířku)
+            row – počet řádků v síti
+            column – počet sloupců v síti
         Návratová hodnota:
-            2D pole se soiřadnicemi bodů (tuple)
+            2D pole se souřadnicemi bodů (tuple)
     '''
 
-    centers = [[None]*row for i in range(column)]
+    centers = [[None]*column for i in range(row)]
 
     coord_x = -window_width()/2 + 25
     coord_y = window_height()/2 - 50
@@ -154,13 +153,15 @@ def centers(row, column):
 
     return centers
 
-def is_Digit(number, limit):
+def is_Digit(number, min, max, coord = None):
 
     '''
-        Funkce kontroluje je řetězec kladné přirozené číslo v příslučném intervalu
+        Funkce kontroluje, zda je řetězec kladné přirozené číslo v příslušném intervalu
         Vstupní parametry:
             number (řetězec)
-            limit (maximální hodnota, které může číslo mabývat - rozměry sítě/interní maximální velikost proměnné)
+            min - minimální velikost čísla
+            max - maximální velikost čísla
+            coord = None (None - dotaz na velikost pole, "x"/"y" - dotaz na souřadnice buňky)
         Návratová hodnota: bool
             True - řetězec je číslo
             False - řetězec není číslo
@@ -168,11 +169,18 @@ def is_Digit(number, limit):
 
     if number.isdecimal():
         
-        if int(number) <= limit:
+        if int(number) >= min and int(number) <= max:
 
             return True
-        
-    print("Špatný formát vstupu, vstup musí být kladné přirozené číslo v intervalu <0, " + str(limit) + ">. Zkuste to znovu.")
+    
+    if coord == None:         
+
+        print(">> Špatný formát vstupu, šířka i výška hracího pole musí být kladné přirozené číslo v intervalu <" + str(min) + ", " + str(max) + ">. Zkuste to znovu.")
+
+    else:
+
+        print(">> Špatný formát vstupu, číslo " + coord + " musí být kladné přirozené číslo v intervalu <" + str(min) + ", " + str(max) + ">. Zkuste to znovu.")
+    
     return False 
  
 def shift(player, centers, fill, row, column):
@@ -182,14 +190,14 @@ def shift(player, centers, fill, row, column):
         Vstupní parametry:
             player: hodnota 1, 2
                 1 - červený kroužek (začíná)
-                2 - modrý křážek
-            centers (2D pole se souřadnicemi středů spodních hran buněk)
-            fill (2D pole se informacemi o obsazenosti buněk)
+                2 - modrý křížek
+            centers - 2D pole se souřadnicemi středů spodních hran buněk
+            fill - 2D pole se informacemi o obsazenosti buněk
                 0 - volno
                 1 - hráč č. 1
                 2 - hráč č. 2
-            row (počet řádků sítě)
-            column (počet sloupců sítě)
+            row - počet řádků sítě
+            column – počet sloupců sítě
         Návratová hodnota:
             fill - aktualizované 2D pole obsazenosti
     '''
@@ -204,10 +212,10 @@ def shift(player, centers, fill, row, column):
 
         if len(splitted) != 2:
 
-            print("Špatný formát vstupu, zadejte souřadnice ve formátu \"x, y\".")
+            print(">> Špatný formát vstupu, zadejte souřadnice ve formátu \"x, y\".")
             continue
 
-        if is_Digit(splitted[0], row) and is_Digit(splitted[1], column):
+        if is_Digit(splitted[0], 0, row, coord = "řádku") and is_Digit(splitted[1], 0, column, coord = "sloupce"):
             
             coord_x = int(splitted[0]) - 1
             coord_y = int(splitted[1]) - 1
@@ -223,7 +231,7 @@ def shift(player, centers, fill, row, column):
             
         else:
 
-            print("Políčko je již obsazeno.")
+            print(">> Políčko je již obsazeno.")
             continue
 
     up()
@@ -263,6 +271,24 @@ def sign(player):
         goto(pos()[0] - 25, pos()[1] + 25)
         goto(pos()[0] + 50, pos()[1] - 50)
 
+def lenght_row(row, column):
+
+    '''
+        Funkce spočítá délku vítězné linie
+        Vstupní parametry:
+            row - počet řádků sítě
+            column - počet sloupců sítě
+        Návratová hodnota: - délka vítězné linie
+    '''
+
+    tmp = min(row, column)
+    
+    if tmp > 5:
+        
+        return 5
+
+    return tmp
+
 def win_row_check(player, direction, fill, centers, last, row, column):
 
     '''
@@ -270,11 +296,11 @@ def win_row_check(player, direction, fill, centers, last, row, column):
         Vstupní parametry:
             player: hodnota 1, 2
                 1 - červený kroužek (začíná)
-                2 - modrý křážek
+                2 - modrý křížek
             direction
                 1 - vodorovně
                 2 - svisle
-                3 - z pravo nahoře vlevo douu
+                3 - z pravo nahoře vlevo dolu
                 4 - z leva nahoře pravo dolu
             fill (2D pole se informacemi o obsazenosti buněk)
                 0 - volno
@@ -288,11 +314,7 @@ def win_row_check(player, direction, fill, centers, last, row, column):
             1 - hráč nevyhrál
     '''
 
-    lenght = min(row, column)
-
-    if lenght > 5:
-
-        length = 5
+    lenght = lenght_row(row, column)
     
     match direction:
 
@@ -314,7 +336,7 @@ def win_row_check(player, direction, fill, centers, last, row, column):
         coord_y = last[1]
         counter = 1
 
-        while coord_x + move[0] < row and coord_y + move[1] < column and fill[coord_x + move[0]][coord_y + move[1]] == player:
+        while coord_x + move[0] < row and coord_x + move[0] >= 0 and coord_y + move[1] < column and coord_y + move[1] >= 0 and fill[coord_x + move[0]][coord_y + move[1]] == player:
 
             counter += 1
             coord_x += move[0]
@@ -330,7 +352,7 @@ def win_row_check(player, direction, fill, centers, last, row, column):
         coord_y = last[1]
         move = tuple((-1)* elem for elem in move)
 
-        while coord_x + move[0] < row and coord_y + move[1] < column and fill[coord_x + move[0]][coord_y + move[1]] == player:
+        while coord_x + move[0] < row and coord_x + move[0] >= 0 and coord_y + move[1] < column and coord_y + move[1] >= 0 and fill[coord_x + move[0]][coord_y + move[1]] == player:
 
             counter += 1
             coord_x += move[0]
@@ -347,19 +369,19 @@ def win_row_check(player, direction, fill, centers, last, row, column):
 def win_check(player, fill, centers, last, row, column):
     
     '''
-        Funkce kontroluje zda hráč, který je na řadě vyhrál, pokud ano vykreslí spojici daných bodů
+        Funkce kontroluje zda hráč, který je na řadě vyhrál, pokud ano vykreslí spojnici daných bodů
         Vstupní parametry:
             player: hodnota 1, 2
                 1 - červený kroužek (začíná)
-                2 - modrý křážek
-            fill (2D pole se informacemi o obsazenosti buněk)
+                2 - modrý křížek
+            fill - 2D pole se informacemi o obsazenosti buněk
                 0 - volno
                 1 - hráč č. 1
                 2 - hráč č. 2
-            centers (2D pole se souřadnicemi středů spodních hran buněk)
+            centers - 2D pole se souřadnicemi středů spodních hran buněk
             last - souřadnice naposled zadaného znaku
-            row (počet řádků sítě)
-            column (počet sloupců sítě)
+            row - počet řádků sítě
+            column - počet sloupců sítě
         Návratová hodnota: bool
             0 - hráč vyhrál
             1 - hráč nevyhrál
@@ -388,9 +410,9 @@ def draw_line(centers, most_left, most_right):
     '''
         Funkce vykresluje čáru spojující vítězné znaky
         Vstupní parametry:
-            centers (2D pole se souřadnicemi středů spodních hran buněk)
-            most_left (souřadnice body nejvíce nahoře)
-            most_right (souřadnice bodu nejvíce dole)
+            centers - 2D pole se souřadnicemi středů spodních hran buněk
+            most_left - souřadnice body nejvíce nahoře
+            most_right - souřadnice bodu nejvíce dole
         Návratová hodnota: žádná
     '''
 
@@ -405,23 +427,33 @@ def draw_line(centers, most_left, most_right):
 
 def message(text):
 
+    '''
+        Funkce na konci hry zobrazí text, kdo vyhrál
+        Vstupní parametry:
+            text - text, který má být zobrazen
+        Návratová hodnota: žádná
+    '''
+
     up()
     goto(0, 0)
-    write(text, font = ("Arial", 20, "normal"))
+    fillcolor("red")
     down()
+    begin_fill()
 
+    write(text, font = ("Arial", 20, "normal"))
+    
 def game(centers, fill, row, column):
 
     '''
-        Funkce se nastřídačku ptát jednotlivých hráčů na souřadnice a zakresluje je do sítě
+        Funkce se na střídačku ptát jednotlivých hráčů na souřadnice a zakresluje je do sítě
         Vstupní parametry:
-            centers (2D pole se souřadnicemi středů spodních hran buněk)
-            fill (2D pole se informacemi o obsazenosti buněk)
+            centers - 2D pole se souřadnicemi středů spodních hran buněk
+            fill - 2D pole se informacemi o obsazenosti buněk
                 0 - volno
                 1 - hráč č. 1
                 2 - hráč č. 2
-            row (počet řádků sítě)
-            column (počet sloupců sítě)
+            row - počet řádků sítě
+            column - počet sloupců sítě
         Návratová hodnota: žádná
     '''
 
@@ -433,7 +465,7 @@ def game(centers, fill, row, column):
 
     player = 1
     move = 1
-    print("Zadávejte souřadnice ve formátu číslo řádku, číslo sloupce. Např. \"2,1\" (řádek číslo 2 a sloupec číslo 1).")
+    print(">> Zadávejte souřadnice ve formátu \"<číslo řádku>,<číslo sloupce>\". Např. \"2,1\" (řádek číslo 2 a sloupec číslo 1).")
 
     while move <= row*column:
   
@@ -446,7 +478,7 @@ def game(centers, fill, row, column):
 
                 message("Hráč 1 vyhrál")
 
-                print("Hráč 1 vyhrál.")
+                print(">> Hráč 1 vyhrál.")
                 break
 
             player = 2
@@ -461,7 +493,7 @@ def game(centers, fill, row, column):
                 
                 message("Hráč 2 vyhrál")
 
-                print("Hráč 2 vyhrál.")
+                print(">> Hráč 2 vyhrál.")
                 break
 
             player = 1
@@ -471,21 +503,18 @@ def game(centers, fill, row, column):
 
         message("Remíza")
         
-        print("Remíza")
+        print(">> Remíza")
 
     print("Hra skončila.")
 
 row, column = set_size()
 
-lenght = min(row, column)
+lenght = lenght_row(row, column)
 
-if lenght > 5:
-
-    length = 5
-
-print("Vyhraje hráč, který dříve vytvoří nepřerušenou řadu svých značek dlouhou " + str(lenght) + " znaků.\n")
+print(">> Vyhraje hráč, který dříve vytvoří nepřerušenou řadu svých značek dlouhou " + str(lenght) + " znaky.\n")
 cell_centers = None
 title("Piškvorky")
+
 
 draw(row, column)
 cell_centers = centers(row, column)
