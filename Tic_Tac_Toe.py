@@ -1,5 +1,5 @@
 from sys import maxsize
-from turtle import begin_fill, circle, color, down, fillcolor, forward, hideturtle, pos, right, left, exitonclick, goto, speed, title, up, width, window_height, window_width, write
+from turtle import Screen, begin_fill, circle, color, down, fillcolor, forward, hideturtle, pos, right, left, exitonclick, goto, speed, title, up, width, window_height, window_width, write
 
 def draw_Square():          # Funkce vykreslí čtverec o hraně 50 px
 
@@ -349,11 +349,12 @@ lenght = lenght_row(row, column)
 
 print(">> Vyhraje hráč, který dříve vytvoří nepřerušenou řadu svých značek dlouhou " + str(lenght) + " znaky.\n")
 cell_centers = None
+
 title("Piškvorky")
+Screen()
 
-
-draw(row, column)
 cell_centers = centers(row, column)
+draw(row, column)
 
 fill = [[0]*row for i in range(column)]
     
