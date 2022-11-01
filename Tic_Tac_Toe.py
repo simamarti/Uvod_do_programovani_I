@@ -153,10 +153,7 @@ def shift(player, centers, fill, row, column):  # Funkce se ptá uživatele na s
             fill[coord_x][coord_y] = player
             break
             
-        else:
-
-            print(">> Políčko je již obsazeno.")
-            continue
+        print(">> Políčko je již obsazeno.")
 
     up()
     goto(centers[coord_x][coord_y])
@@ -217,7 +214,7 @@ def win_row_check(player, direction, fill, centers, last, row, column):     # Fu
     coord_y = last[1]
     counter = 1
 
-    while coord_x + move[0] < row and coord_x + move[0] >= 0 and coord_y + move[1] < column and coord_y + move[1] >= 0 and fill[coord_x + move[0]][coord_y + move[1]] == player:
+    while (coord_x + move[0]) < row and (coord_x + move[0]) >= 0 and (coord_y + move[1]) < column and (coord_y + move[1]) >= 0 and fill[coord_x + move[0]][coord_y + move[1]] == player:
 
         counter += 1
         coord_x += move[0]
@@ -233,7 +230,7 @@ def win_row_check(player, direction, fill, centers, last, row, column):     # Fu
     coord_y = last[1]
     move = tuple((-1)* elem for elem in move)
 
-    while coord_x + move[0] < row and coord_x + move[0] >= 0 and coord_y + move[1] < column and coord_y + move[1] >= 0 and fill[coord_x + move[0]][coord_y + move[1]] == player:
+    while (coord_x + move[0]) < row and (coord_x + move[0]) >= 0 and (coord_y + move[1]) < column and (coord_y + move[1]) >= 0 and fill[coord_x + move[0]][coord_y + move[1]] == player:
 
         counter += 1
         coord_x += move[0]
