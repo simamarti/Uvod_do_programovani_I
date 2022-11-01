@@ -200,7 +200,7 @@ def win_row_check(player, direction, fill, centers, last, row, column):     # Fu
 
     lenght = lenght_row(row, column)
     
-    match direction:
+    match direction:            # Posun v 2D poli pro kontrolu vítězství, např. case 4: [2][1] -> [1][2]
 
         case 1:
             move = (1, 0)
@@ -213,42 +213,39 @@ def win_row_check(player, direction, fill, centers, last, row, column):     # Fu
     
     most_left = last
     most_right = last
+    coord_x = last[0]
+    coord_y = last[1]
+    counter = 1
 
-    for i in range(lenght):
-        
-        coord_x = last[0]
-        coord_y = last[1]
-        counter = 1
+    while coord_x + move[0] < row and coord_x + move[0] >= 0 and coord_y + move[1] < column and coord_y + move[1] >= 0 and fill[coord_x + move[0]][coord_y + move[1]] == player:
 
-        while coord_x + move[0] < row and coord_x + move[0] >= 0 and coord_y + move[1] < column and coord_y + move[1] >= 0 and fill[coord_x + move[0]][coord_y + move[1]] == player:
+        counter += 1
+        coord_x += move[0]
+        coord_y += move[1]
+        most_right = (coord_x, coord_y)
 
-            counter += 1
-            coord_x += move[0]
-            coord_y += move[1]
-            most_right = (coord_x, coord_y)
-
-            if counter == lenght:
+        if counter == lenght:
                 
-                draw_line(centers, most_left, most_right)
-                return True
+            draw_line(centers, most_left, most_right)
+            return True
         
-        coord_x = last[0]
-        coord_y = last[1]
-        move = tuple((-1)* elem for elem in move)
+    coord_x = last[0]
+    coord_y = last[1]
+    move = tuple((-1)* elem for elem in move)
 
-        while coord_x + move[0] < row and coord_x + move[0] >= 0 and coord_y + move[1] < column and coord_y + move[1] >= 0 and fill[coord_x + move[0]][coord_y + move[1]] == player:
+    while coord_x + move[0] < row and coord_x + move[0] >= 0 and coord_y + move[1] < column and coord_y + move[1] >= 0 and fill[coord_x + move[0]][coord_y + move[1]] == player:
 
-            counter += 1
-            coord_x += move[0]
-            coord_y += move[1]
-            most_left = (coord_x, coord_y)
+        counter += 1
+        coord_x += move[0]
+        coord_y += move[1]
+        most_left = (coord_x, coord_y)
 
-            if counter == lenght:
+        if counter == lenght:
 
-                draw_line(centers, most_left, most_right)
-                return True
+            draw_line(centers, most_left, most_right)
+            return True
 
-        return False
+    return False
 
 def win_check(player, fill, centers, last, row, column):    # Funkce kontroluje zda hráč, který je na řadě vyhrál, pokud ano vykreslí spojnici daných bodů
 
