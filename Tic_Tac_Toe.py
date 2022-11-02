@@ -1,15 +1,17 @@
 from sys import maxsize
 from turtle import Screen, begin_fill, circle, color, down, fillcolor, forward, hideturtle, pos, right, left, exitonclick, goto, speed, title, up, width, window_height, window_width, write
 
+EDGE = 50
+
 def draw_Square():          # Funkce vykreslí čtverec o hraně 50 px
 
-    forward(50)
+    forward(EDGE)
     right(90)
-    forward(50)
+    forward(EDGE)
     right(90)
-    forward(50)
+    forward(EDGE)
     right(90)
-    forward(50)
+    forward(EDGE)
     right(90)
 
 def draw(row, column):      # Funkce vykreslí čtvercovou síť o zadaných rozměrech
@@ -25,7 +27,7 @@ def draw(row, column):      # Funkce vykreslí čtvercovou síť o zadaných roz
         for j in range(column):
 
             draw_Square()
-            forward(50)
+            forward(EDGE)
         
         up()                    # Vykreslení číslování řádků
         forward(25)
@@ -40,9 +42,9 @@ def draw(row, column):      # Funkce vykreslí čtvercovou síť o zadaných roz
         down()
 
         right(180)
-        forward(50*column)
+        forward(EDGE*column)
         left(90)
-        forward(50)
+        forward(EDGE)
         left(90)
     
     up()
@@ -54,7 +56,7 @@ def draw(row, column):      # Funkce vykreslí čtvercovou síť o zadaných roz
     for i in range(column):     # Vykreslení číslování sloupců
 
         write(str(i +1))
-        forward(50)
+        forward(EDGE)
     down()
 
     hideturtle()
@@ -91,18 +93,18 @@ def centers(row, column):   # Funkce vypočítá středy spodní hrany jednotliv
 
     centers = [[None]*column for i in range(row)]
 
-    coord_x = -window_width()/2 + 25
-    coord_y = window_height()/2 - 50
+    coord_x = -window_width()/2 + EDGE/2
+    coord_y = window_height()/2 - EDGE
 
     for i in range(row):
 
         for j in range(column):
 
             centers[i][j] = (coord_x, coord_y)
-            coord_x += 50
+            coord_x += EDGE
             
-        coord_y -= 50
-        coord_x = -window_width()/2 + 25
+        coord_y -= EDGE
+        coord_x = -window_width()/2 + EDGE/2
 
     return centers
 
@@ -168,20 +170,20 @@ def sign(player):   # Funkce vykreslí značku příslušného hráče (0 - čer
 
         color("red")
         begin_fill()
-        circle(25)
+        circle(EDGE/2)
     
     else:
 
         color("blue")
         begin_fill()
         up()
-        goto(pos()[0], pos()[1] + 25)
+        goto(pos()[0], pos()[1] + EDGE/2)
         down()
-        goto(pos()[0] + 25, pos()[1] + 25)
-        goto(pos()[0] - 50, pos()[1] - 50)
-        goto(pos()[0] + 25, pos()[1] + 25)
-        goto(pos()[0] - 25, pos()[1] + 25)
-        goto(pos()[0] + 50, pos()[1] - 50)
+        goto(pos()[0] + EDGE/2, pos()[1] + EDGE/2)
+        goto(pos()[0] - EDGE, pos()[1] - EDGE)
+        goto(pos()[0] + EDGE/2, pos()[1] + EDGE/2)
+        goto(pos()[0] - EDGE/2, pos()[1] + EDGE/2)
+        goto(pos()[0] + EDGE, pos()[1] - EDGE)
 
 def lenght_row(row, column):    # Funkce spočítá délku vítězné linie
 
@@ -271,9 +273,9 @@ def draw_line(centers, most_left, most_right):      # Funkce vykresluje čáru s
     fillcolor()
 
     up()
-    goto(centers[most_left[0]][most_left[1]][0], centers[most_left[0]][most_left[1]][1] + 25)
+    goto(centers[most_left[0]][most_left[1]][0], centers[most_left[0]][most_left[1]][1] + EDGE/2)
     down()
-    goto(centers[most_right[0]][most_right[1]][0], centers[most_right[0]][most_right[1]][1] + 25)
+    goto(centers[most_right[0]][most_right[1]][0], centers[most_right[0]][most_right[1]][1] + EDGE/2)
 
 def message(text):  # Funkce na konci hry zobrazí text, kdo vyhrál
 
