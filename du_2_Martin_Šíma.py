@@ -103,8 +103,12 @@ def print_Extremes(Q_max : float, Q_min : float, Desc_max : tuple, Desc_min : tu
         print("Minimální průtok: " + str(Desc_min[0]) + ", " + str(Desc_min[1]) + ", " + str(Desc_min[2])
          + ", " + str(Desc_min[3]) + ", " + str(Desc_min[4]) + ", " + str(Q_min))
 
-def print_gap(current_date, row):
-    pass
+def process_gap(current_date, next_date):
+    counter = 0
+    
+
+    
+    return counter
 def init_min_max(row, Q_min, Q_max, Desc_min, Desc_max) -> tuple:
     Q_min = row[5]
     Q_max = row[5]
@@ -127,6 +131,7 @@ def analyze_by_day(reader, writer_week, writer_year) -> None:
     Q_max = None
     Time_min = None
     Time_max = None
+    counter = 0
 
 
     for row in reader:
@@ -146,7 +151,8 @@ def analyze_by_day(reader, writer_week, writer_year) -> None:
             print(">> Vstupní data nemají správný formát.")
             return 1
         if row[5] <= 0:
-            print(">> Průtok musí být větší než 0.")
+            print(">> Dne " + str(row[4]) + ". " + str(row[3]) + ". " + str(row[2]) + " byl záporný, nebo nulový průtok.")
+            continue
         if not is_valid((row[2], row[3], row[4])):
             print("datum špatný formát, nebo označnuje nexecistující den v roce (např. 29. 2. 2003).") 
             continue
@@ -155,7 +161,7 @@ def analyze_by_day(reader, writer_week, writer_year) -> None:
             first_row = False
         if not is_next(current_date, row[2:-1]):          # KOntrola, zda se v datech neobjevila mezera/chyba
             print(">> Mezera v datech. >>" + str(row) + "<<")
-            print_gap(current_date, row[2:-1])
+            counter = process_gap(current_date, row[2:-1])
         if week_days == 0:
             desc_week = (row[0], row[1], row[2], row[3], row[4])
         elif week_days == 7:
