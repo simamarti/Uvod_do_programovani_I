@@ -1,5 +1,5 @@
-# Uživatelský manuál
-## Domácí ůkol 2 - dokumentace
+# Domácí ůkol 2 - dokumentace
+## Uživatelský manuál 
 Program na vstupu načte soubor *.csv s denními průtoky daného vodního toku. Na výstupu program uloží do dvou souborů průměrné týdenní (vystup_7dni.csv) a roční (vystup_rok.csv) průtoky ve stejném formátu.
 ### Formát vstupního souboru
 139000,QD,1.11.1980,    0.6700<br/>
@@ -14,7 +14,7 @@ Třetí sloupec označuje datum ve formátu "DD. MM. RRRR"
 Pokud nastane výjimka uživatel o tom bude informován v terminálu chybovou hláškou.
 
 |Číslo chyby|Chyba|Výpis na terminál|
-|:---:|:---:|:---:|
+|:---:|:---|:---|
 |č. 1|Zadaný soubor neexistuje|">> Soubor nebyl nalezen."|
 |č. 2|Chyba při čtení/zápisu|">> Chyba při čtení/zápisu."|
 |č. 3|Prázdný soubor|">> Soubor je prázdný."|
@@ -23,7 +23,7 @@ Pokud nastane výjimka uživatel o tom bude informován v terminálu chybovou hl
 Po načtení každého řádku, před zpracováním program zkontroluje zda jsou data validní.
 
 |Číslo chyby|Chyba|Výpis na terminál|
-|:---:|:---:|:---:|
+|:---:|:---|:---|
 |č. 4|Špatný formát dat|">> Špatný formát dat."|
 |č. 5|Datum měření neexistuje (např. 29. 2. 2003)|">> Datum označnuje nexecistující den v roce (9. 2. 2003)"|
 |č. 6|Průtok má špatný formát|">> Špatný datový typ průtoku, musí se jednat o reálné číslo."|
