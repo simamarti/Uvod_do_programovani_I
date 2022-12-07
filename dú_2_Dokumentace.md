@@ -44,3 +44,11 @@ První sedmidenní průměr bude začínat 1. 11. 1980, druhý sedmidenní průt
 
 ### Výstupní soubory
 Program vypočítané hodnoty uloží do dvou souborů vystup_7dni.csv, vystup_rok.csv, který budou mít stejný formát dat jako vstupní soubor.
+
+## Komentář ke zdrojovému kódu
+### Funkce
+|Název|funkce:add_zeros()|
+|:---:|:---|
+|Popis|Funkce doplní spočítaný průtok na 4 desetinná místa|
+|Argumenty|number - číslo ve formě řetězce|
+|Návratová hodnota|číslo doplněné na 4 desetinná místa ve formě řetězce|
