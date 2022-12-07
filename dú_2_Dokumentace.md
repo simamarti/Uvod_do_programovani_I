@@ -76,3 +76,20 @@ Program vypočítané hodnoty uloží do dvou souborů vystup_7dni.csv, vystup_r
 ||current_date - aktuální datum|
 ||sum_year - součet průtoků za rok|
 ||year_days - počet validních dní v roce|
+
+|Název|print_week()|
+|:---:|:---|
+|Popis|Funkce uloží sedmidenní průtok do souboru|
+|Argumenty|writer_week - writer, pomocí kterého se zapisuje do souboru vystup_7dni.csv|
+||row - pole vytvořené z právě zpracovávaného řádku|
+||desc_week - popis aktuálně zpracovávaného sedmidenního průtoku|
+|Návratová hodnota|desc_week - popis aktuálně zpracovávaného sedmidenního průtoku|
+
+|Název|print_year()|
+|:---:|:---|
+|Popis|Funkce uloží roční průtok do souboru|
+|Argumenty|writer_year - writer, pomocí kterého se zapisuje do souboru vystup_rok.csv|
+||row - pole vytvořené z právě zpracovávaného řádku|
+||desc_year - popis aktuálně zpracovávaného ročního průtoku|
+|Návratová hodnota|desc_week - popis aktuálně zpracovávaného ročního průtoku|
+
