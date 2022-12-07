@@ -57,5 +57,5 @@ Program vypočítané hodnoty uloží do dvou souborů vystup_7dni.csv, vystup_r
 |:---:|:---|
 |Popis|Funkce zpracoje řádek na vstupu|
 |Argumenty|Time_min - datum minimálního průtoku|
-|>|Time_max - datum maximálního průtoku|
+|^|Time_max - datum maximálního průtoku|
 |Návratová hodnota|číslo doplněné na 4 desetinná místa ve formě řetězce|
