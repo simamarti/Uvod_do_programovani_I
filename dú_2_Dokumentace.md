@@ -105,3 +105,45 @@ Program vypočítané hodnoty uloží do dvou souborů vystup_7dni.csv, vystup_r
 ||week_days - počet validních průtoků za sedm dní|
 ||year_days - počet validních dní v roce|
 |Návratová hodnota|None|
+
+|Název|print_Extremes()|
+|:---:|:---|
+|Popis|Funkce vypíše maximální a minimální průtoky|
+|Argumenty|Q_max - maximální průtoku|
+||Q_min - minimální průtoku|
+||desc_max - popis nejvyššího denního průtoku|
+||desc_min - popis nejnižšího denního průtoku|
+|Návratová hodnota|None|
+
+|Název|init_min_max()|
+|:---:|:---|
+|Popis|Funkce vypíše maximální a minimální průtoky|
+|Argumenty|row - pole vytvořené z právě zpracovávaného řádku|
+||Q_min - minimální průtoku|
+||Q_max - maximální průtoku|
+||desc_max - popis nejvyššího denního průtoku|
+||desc_min - popis nejnižšího denního průtoku|
+|Návratová hodnota||Q_min - minimální průtoku|
+||Q_max - maximální průtoku|
+||desc_max - popis nejvyššího denního průtoku|
+||desc_min - popis nejnižšího denního průtoku|
+
+|Název|gap_detect()|
+|:---:|:---|
+|Popis|Funkce vypíše maximální a minimální průtoky|
+|Argumenty|current_date - aktuální datum|
+||Date - následující datum|
+||gap_week - počet načtených mezer v týdnu|
+||gap_pre - počet načtených mezer, které však patří do následujícího týdne|
+||week_days - počet validních průtoků za sedm dní|
+|Návratová hodnota|gap_week - počet načtených mezer v týdnu|
+||gap_pre - počet načtených mezer, které však patří do následujícího týdne|
+
+|Název|analyze_by_day()|
+|:---:|:---|
+|Popis|Funkce postupně pracovává průtoky|
+|Argumenty|reader - reader, pomocí kterého se čte ze vstupního souboru|
+||r - vstupní soubor otevřený pro čtení|
+||writer_year - writer, pomocí kterého se zapisuje do souboru vystup_rok.csv|
+||writer_week - writer, pomocí kterého se zapisuje do souboru vystup_7dni.csv|
+|Návratová hodnota|None|
