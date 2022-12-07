@@ -42,10 +42,17 @@ Pokud týden skončí uprostřed mezery v datech, nový týden se začne počít
 
 První sedmidenní průměr bude začínat 1. 11. 1980, druhý sedmidenní průtok se bude počítat od 10. 11. 1980.
 
+Pokud za konce týdne začíná mezera, tato mezera je započítána do následujícího týdne.
+
 ### Výstupní soubory
 Program vypočítané hodnoty uloží do dvou souborů vystup_7dni.csv, vystup_rok.csv, který budou mít stejný formát dat jako vstupní soubor.
 
 ## Komentář ke zdrojovému kódu
+### Zpracování dat
+Program postupně načítání vstupní hodnoty. Po kontrole validity jsou průtoky přičteny k sedmidenní a roční sumě, zároveň je zvýšen o jedničku počet dní v týdnu. 
+Pokud je součet dní v týdnu, mezer větší, nebo roven 7, vypočítá se průměrný sedmidenní průtok a poté je zapsán do souboru "vystup_7dni.csv".
+Dále ji při načítání ukládán letopočet. Pokud se nově načtený letopočet liší od předešlého, vypočítá se průměrný roční průtok a ten je zapsán do souboru "vystup_rok.csv".
+
 ### Funkce
 |Název|add_zeros()|
 |:---:|:---|
@@ -83,6 +90,8 @@ Program vypočítané hodnoty uloží do dvou souborů vystup_7dni.csv, vystup_r
 |Argumenty|writer_week - writer, pomocí kterého se zapisuje do souboru vystup_7dni.csv|
 ||row - pole vytvořené z právě zpracovávaného řádku|
 ||desc_week - popis aktuálně zpracovávaného sedmidenního průtoku|
+||sum_week - součet denních průtoků v týdnu|
+||week_days - počet dní v týdnu|
 |Návratová hodnota|desc_week - popis aktuálně zpracovávaného sedmidenního průtoku|
 
 |Název|print_year()|
@@ -91,6 +100,8 @@ Program vypočítané hodnoty uloží do dvou souborů vystup_7dni.csv, vystup_r
 |Argumenty|writer_year - writer, pomocí kterého se zapisuje do souboru vystup_rok.csv|
 ||row - pole vytvořené z právě zpracovávaného řádku|
 ||desc_year - popis aktuálně zpracovávaného ročního průtoku|
+||sum_year - součet denních průtoků v roce|
+||year_days - počet dní v roce|
 |Návratová hodnota|desc_year - popis aktuálně zpracovávaného ročního průtoku|
 
 |Název|print_rest()|
