@@ -91,5 +91,17 @@ Program vypočítané hodnoty uloží do dvou souborů vystup_7dni.csv, vystup_r
 |Argumenty|writer_year - writer, pomocí kterého se zapisuje do souboru vystup_rok.csv|
 ||row - pole vytvořené z právě zpracovávaného řádku|
 ||desc_year - popis aktuálně zpracovávaného ročního průtoku|
-|Návratová hodnota|desc_week - popis aktuálně zpracovávaného ročního průtoku|
+|Návratová hodnota|desc_year - popis aktuálně zpracovávaného ročního průtoku|
 
+|Název|print_rest()|
+|:---:|:---|
+|Popis|Funkce zapíše do obou souborů zbylé průměry na konci načítání dat|
+|Argumenty|writer_week - writer, pomocí kterého se zapisuje do souboru vystup_7dni.csv|
+||writer_year - writer, pomocí kterého se zapisuje do souboru vystup_rok.csv|
+||desc_week - popis aktuálně zpracovávaného sedmidenního průtoku|
+||desc_year - popis aktuálně zpracovávaného ročního průtoku|
+||sum_week - součet sedmidenních průměrů|
+||sum_year - součet průtoků za rok|
+||week_days - počet validních průtoků za sedm dní|
+||year_days - počet validních dní v roce|
+|Návratová hodnota|None|
