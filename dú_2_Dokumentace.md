@@ -49,8 +49,8 @@ Program vypočítané hodnoty uloží do dvou souborů vystup_7dni.csv, vystup_r
 
 ## Komentář ke zdrojovému kódu
 ### Zpracování dat
-Program postupně načítání vstupní hodnoty. Po kontrole validity jsou průtoky přičteny k sedmidenní a roční sumě, zároveň je zvýšen o jedničku počet dní v týdnu. 
-Pokud je součet dní v týdnu, mezer větší, nebo roven 7, vypočítá se průměrný sedmidenní průtok a poté je zapsán do souboru "vystup_7dni.csv".
+Program postupně načítání vstupní hodnoty. Po kontrole validity jsou průtoky přičteny k sedmidenní a roční sumě, zároveň je zvýšen o jedničku počet dní v týdnu.<br/>
+Pokud je součet dní v týdnu, mezer větší, nebo roven 7, vypočítá se průměrný sedmidenní průtok a poté je zapsán do souboru "vystup_7dni.csv".<br/>
 Dále ji při načítání ukládán letopočet. Pokud se nově načtený letopočet liší od předešlého, vypočítá se průměrný roční průtok a ten je zapsán do souboru "vystup_rok.csv".
 
 ### Funkce
