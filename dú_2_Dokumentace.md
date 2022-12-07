@@ -12,9 +12,10 @@ Třetí sloupec označuje datum ve formátu "DD. MM. RRRR"
 ## Chybové hlášky
 Pokud nastane výjimka uživatel o tom bude informován v terminálu chybovou hláškou.
 
+|:---:|:---:|
 |Zadaný soubor neexistuje|">> Soubor nebyl nalezen."|
 |Chyba při čtení/zápisu:|">> Chyba při čtení/zápisu."|
 |Prázdný soubor:|">> Soubor je prázdný."|
-|:---:|:---:|
+
 
 Po načtení každého řádku, před zpracováním program zkontroluje zda jsou data validní.
