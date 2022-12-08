@@ -65,15 +65,15 @@ Dále je při načítání ukládán letopočet. Pokud se nově načtený letopo
 |:---:|:---|
 |Popis|Funkce zpracuje řádek na vstupu|
 |Argumenty <td rowspan=10>|Time_min - datum minimálního průtoku|
-|Time_max - datum maximálního průtoku|
-|sum_week - součet sedmidenních průměrů|
-|Q_min - minimální průtoku|
-|Q_max - maximální průtoku|
-|week_days - počet validních průtoků za sedm dní|
-|row - pole vytvořené z právě zpracovávaného řádku|
-|current_date - aktuální datum|
-|sum_year - součet průtoků za rok|
-|year_days - počet validních dní v roce|
+||Time_max - datum maximálního průtoku|
+||sum_week - součet sedmidenních průměrů|
+||Q_min - minimální průtoku|
+||Q_max - maximální průtoku|
+||week_days - počet validních průtoků za sedm dní|
+||row - pole vytvořené z právě zpracovávaného řádku|
+||current_date - aktuální datum|
+||sum_year - součet průtoků za rok|
+||year_days - počet validních dní v roce|
 |Návratová hodnota|Time_min - datum minimálního průtoku|
 ||Time_max - datum maximálního průtoku|
 ||sum_week - součet sedmidenních průměrů|
