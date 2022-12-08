@@ -120,7 +120,7 @@ def analyze_by_day(reader, r, writer_week, writer_year) -> None:    # Načtení 
         try:
             Date = datetime.date(int(row[2]), int(row[3]), int(row[4]))
         except ValueError:
-            print(">> Datum označnuje nexecistující den v roce (" + row[4] + ". " + row[3] + ". " + row[2] + ")")
+            print(">> Datum označnuje neexistující den v roce (" + row[4] + ". " + row[3] + ". " + row[2] + ")")
             current_date = Date
             continue
 
@@ -132,7 +132,7 @@ def analyze_by_day(reader, r, writer_week, writer_year) -> None:    # Načtení 
             continue
         
         if first_row == False and current_date >= Date:
-            print(">> Do minulosti lízt nemůžeme, zatím.")
+            print(">> Data musí být v chronologickém pořadí.")
             print_rest(writer_week, writer_year, desc_week, desc_year, sum_week, sum_year, week_days, year_days)
             return 1
         if first_row:           # inicializace maximálního a minimálního průtoku
@@ -187,5 +187,3 @@ try:                                                                            
 
 except FileNotFoundError:
     print(">> Soubor nebyl nalezen.")
-except IOError:
-    print(">> Chyba při čtení/zápisu.")
