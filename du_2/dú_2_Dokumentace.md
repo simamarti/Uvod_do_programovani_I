@@ -159,4 +159,4 @@ Dále ji při načítání ukládán letopočet. Pokud se nově načtený letopo
 ||r - vstupní soubor otevřený pro čtení|
 ||writer_year - writer, pomocí kterého se zapisuje do souboru vystup_rok.csv|
 ||writer_week - writer, pomocí kterého se zapisuje do souboru vystup_7dni.csv|
-|Návratová hodnota|None|
+|Návratová hodnota|None| 
