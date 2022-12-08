@@ -26,33 +26,33 @@ Po načtení každého řádku, před zpracováním program zkontroluje zda jsou
 |Číslo chyby|Chyba|Výpis na terminál|
 |:---:|:---|:---|
 |č. 3|Špatný formát dat|">> Špatný formát dat."|
-|č. 4|Datum měření neexistuje (např. 29. 2. 2003)|">> Datum označnuje nexecistující den v roce (9. 2. 2003)"|
+|č. 4|Datum měření neexistuje (např. 29. 2. 2003)|">> Datum označnuje neexistující den v roce (29. 2. 2003)"|
 |č. 5|Průtok má špatný formát|">> Špatný datový typ průtoku, musí se jednat o reálné číslo."|
-|č. 6|Na vstupu je den, který v minulost vzhledem k minulému|">> Do minulosti lízt nemůžeme, zatím."|
-|č. 7|Nulový, nebo zápporný průtok|">> Dne <aktuální datum> byl záporný, nebo nulový průtok."|
+|č. 6|Na vstupu nejsou dny v chronologickém  pořadí|">> Data musí být v chronologickém pořadí."|
+|č. 7|Nulový, nebo záporný průtok|">> Dne <aktuální datum> byl záporný, nebo nulový průtok."|
 
 V případě chyb č. 2 a 6 je zpracování dat ukončeno a do souboru jsou zapsány doposud úspěšně zapsané průměry.
 
-Program také detekuje mezery v datech. Pokud Program detekuje mezeru, informuje o tom uživatele přes terminál, např. ">> V záznamu chybí datum: 7. 12. 2022"
-Program mezery započítává do sedmidenních průtoků, ale nepoužívá se k výpočtu. Např. program načte 4 dni, poté 2 mezery, nakonec nečte pouze 1 den. Z výsledných 5 dní vypočítá sedmidenní průměr. 
+Program také detekuje mezery v datech. Pokud program detekuje mezeru, informuje o tom uživatele přes terminál, např. ">> V záznamu chybí datum: 7. 12. 2022"
+Program mezery započítává do sedmidenních průtoků, ale nepoužívá se k výpočtu. Např. program načte 4 dny, poté 2 mezery, nakonec nečte pouze 1 den. Z výsledných 5 dní vypočítá sedmidenní průměr. 
 Pokud týden skončí uprostřed mezery v datech, nový týden se začne počítat od prvního validního data. Např. 
 
 139000,QD,1.11.1980,    0.6700<br/>
 139000,QD,10.11.1980,   0.5800<br/>
 139000,QD,11.11.1980,   0.4500<br/>
 
-První sedmidenní průměr bude začínat 1. 11. 1980, druhý sedmidenní průtok se bude počítat od 10. 11. 1980.
+První sedmidenní průtok bude začínat 1. 11. 1980 a druhý od 10. 11. 1980.
 
 Pokud za konce týdne začíná mezera, tato mezera je započítána do následujícího týdne.
 
 ### Výstupní soubory
-Program vypočítané hodnoty uloží do dvou souborů vystup_7dni.csv, vystup_rok.csv, který budou mít stejný formát dat jako vstupní soubor.
+Program vypočítané hodnoty uloží do dvou souborů vystup_7dni.csv, vystup_rok.csv, které budou mít stejný formát dat jako vstupní soubor.
 
 ## Komentář ke zdrojovému kódu
 ### Zpracování dat
-Program postupně načítání vstupní hodnoty. Po kontrole validity jsou průtoky přičteny k sedmidenní a roční sumě, zároveň je zvýšen o jedničku počet dní v týdnu.<br/>
-Pokud je součet dní v týdnu, mezer větší, nebo roven 7, vypočítá se průměrný sedmidenní průtok a poté je zapsán do souboru "vystup_7dni.csv".<br/>
-Dále ji při načítání ukládán letopočet. Pokud se nově načtený letopočet liší od předešlého, vypočítá se průměrný roční průtok a ten je zapsán do souboru "vystup_rok.csv".
+Program postupně načítá vstupní hodnoty. Po kontrole validity jsou průtoky přičteny k sedmidenní a roční sumě, zároveň je zvýšen o jedničku počet dní v týdnu.<br/>
+Pokud je počet dní v týdnu a mezer větší, nebo roven 7, vypočítá se průměrný sedmidenní průtok a poté je zapsán do souboru "vystup_7dni.csv".<br/>
+Dále je při načítání ukládán letopočet. Pokud se nově načtený letopočet liší od předešlého, vypočítá se průměrný roční průtok a ten je zapsán do souboru "vystup_rok.csv".
 
 ### Funkce
 |Název|add_zeros()|
@@ -63,7 +63,7 @@ Dále ji při načítání ukládán letopočet. Pokud se nově načtený letopo
 
 |Název|Process_record()|
 |:---:|:---|
-|Popis|Funkce zpracoje řádek na vstupu|
+|Popis|Funkce zpracuje řádek na vstupu|
 |Argumenty|Time_min - datum minimálního průtoku|
 ||Time_max - datum maximálního průtoku|
 ||sum_week - součet sedmidenních průměrů|
