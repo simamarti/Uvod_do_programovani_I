@@ -64,8 +64,8 @@ Dále je při načítání ukládán letopočet. Pokud se nově načtený letopo
 |Název|Process_record()|
 |:---:|:---|
 |Popis|Funkce zpracuje řádek na vstupu|
-|Argumenty <td rowspan=10>|Time_min - datum minimálního průtoku|
-||Time_max - datum maximálního průtoku|
+|Argumenty|Time_min - datum minimálního průtoku|
+|^^|Time_max - datum maximálního průtoku|
 ||sum_week - součet sedmidenních průměrů|
 ||Q_min - minimální průtoku|
 ||Q_max - maximální průtoku|
