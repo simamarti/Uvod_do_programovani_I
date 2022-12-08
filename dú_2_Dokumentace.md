@@ -6,10 +6,12 @@ Program na vstupu načte soubor *.csv s denními průtoky daného vodního toku.
 139000,QD,2.11.1980,    0.5800<br/>
 139000,QD,3.11.1980,    0.4500<br/>
 
-První sloupec označuje identifikátor vodoměrné stanice
-Drhý sloupec označuje měřenou veličinu (QD - denní průtok)
-Třetí sloupec označuje datum ve formátu "DD. MM. RRRR"
-Čtvrtý sloupec je kladní reálné číslo označující průtok
+První sloupec označuje identifikátor vodoměrné stanice<br/>
+Druhý sloupec označuje měřenou veličinu (QD - denní průtok)<br/>
+Třetí sloupec označuje datum ve formátu "DD. MM. RRRR"<br/>
+Čtvrtý sloupec je kladní reálné číslo označující průtok<br/>
+
+Každý denní záznam průtoku je zapsán na nové řádce.
 ### Chybové hlášky
 Pokud nastane výjimka uživatel o tom bude informován v terminálu chybovou hláškou.
 
