@@ -44,7 +44,7 @@ Pokud týden skončí uprostřed mezery v datech, nový týden se začne počít
 
 První sedmidenní průměr bude začínat 1. 11. 1980, druhý sedmidenní průtok se bude počítat od 10. 11. 1980.
 
-Pokud za konce týdne začíná mezera, tato mezera je započítána do následujícího týdne.
+Pokud za koncem výpočtu sedmidenního průtoku začíná mezera, další sedmidení průtok je počítán od prvního dne za mezerou.
 
 ### Výstupní soubory
 Program vypočítané hodnoty uloží do dvou souborů vystup_7dni.csv, vystup_rok.csv, který budou mít stejný formát dat jako vstupní soubor.
