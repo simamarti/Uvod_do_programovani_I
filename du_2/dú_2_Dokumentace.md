@@ -49,7 +49,6 @@ Pokud za koncem výpočtu sedmidenního průtoku začíná mezera, další sedmi
 Program vypočítané hodnoty uloží do dvou souborů vystup_7dni.csv, vystup_rok.csv, který budou mít stejný formát dat jako vstupní soubor.
 
 ## Komentář ke zdrojovému kódu
-### Zpracování dat
 Pomocí objektu csv.reader() program nejprve zkontroluje zda soubor existuje (chyba č. 1), nebo zda není prázdný (chyba č. 2). Pokud nastane některá z předchozích chyb, program skončí.<br/>
 Následuje načítání jednotlivých řádků z objektu csv.reader(). U každého řádku program postupně zkontroluje zda má záznam správný formát (chyba č. 3), zda datum měření existuje (např. 29. 2. 2003 neexistuje) (chyba č. 4) a zda je průtok reálné číslo (chyba č. 5). Pokud nastane některá z chyb číslo 3–5, program daný záznam přeskočí a pokračuje dalším řádkem.<br/>
 Pokud není aktuálně načítané datum v chronologickém pořadí, např. když 3. 3. nasleduje po 4. 3., program skončí (chyba č. 6). Pokud je načítán první řádek inicializuje se minimální a maximální průtok na hodnoty prvního záznamu.<br/>
