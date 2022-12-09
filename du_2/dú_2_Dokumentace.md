@@ -147,10 +147,8 @@ Dále ji při načítání ukládán letopočet. Pokud se nově načtený letopo
 |Argumenty|current_date - aktuální datum|
 ||Date - následující datum|
 ||gap_week - počet načtených mezer v týdnu|
-||gap_pre - počet načtených mezer, které však patří do následujícího týdne|
 ||week_days - počet validních průtoků za sedm dní|
 |Návratová hodnota|gap_week - počet načtených mezer v týdnu|
-||gap_pre - počet načtených mezer, které však patří do následujícího týdne|
 
 |Název|analyze_by_day()|
 |:---:|:---|
