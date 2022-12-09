@@ -17,7 +17,6 @@ Pokud nastane výjimka uživatel o tom bude informován v terminálu chybovou hl
 
 |Číslo chyby|Chyba|Výpis na terminál|
 |:---:|:---|:---|
-
 |č. 1|Soubor nebyl nalezen|">> Soubor nebyl nalezen."|
 |č. 2|Chyba při čtení, nebo zápisu|">> Chyba pří čtení/zápisu."|
 |č. 3|Prázdný soubor|">> Soubor je prázdný."|
