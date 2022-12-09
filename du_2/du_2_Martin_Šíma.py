@@ -2,7 +2,7 @@ import csv
 import math
 import datetime
 
-def add_zeros(number):  # Přidání nul na konce čísla, pokud nemá 4 desetinná místa
+def add_zeros(number : str) -> str:  # Přidání nul na konce čísla, pokud nemá 4 desetinná místa
     number_list = list(number)
     dot = 0
     for index, item in enumerate(number_list):
