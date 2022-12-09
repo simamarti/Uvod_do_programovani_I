@@ -177,7 +177,8 @@ try:                                                                            
         writer_year = csv.writer(wr, delimiter = ",")
 
         analyze_by_day(reader, r, writer_week, writer_year)
-except IOError:
-    print(">> Chyba pří čtení/zápisu.")
+
 except FileNotFoundError:
     print(">> Soubor nebyl nalezen.")
+except IOError:
+    print(">> Chyba pří čtení/zápisu.")
