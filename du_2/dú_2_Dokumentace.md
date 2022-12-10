@@ -58,7 +58,7 @@ Nakonec je aktualizován maximální a minimální průtok a průtok je připoč
 Po ukočení čtení ze souboru je do obou výstupních souborů zapsány zbylé průměry a na terminál jsou vypsány maximální a minimální průtoky.<br/> 
 ### Importované knihovny
 csv - umožňuje čtení a zápis do souboru formátu csv<br/>
-datetime - umožňuje ukládat data, kontroluje zda je datum validní, zde k datu přičítat (např. 1 den).<br/>
+datetime - umožňuje ukládat data, kontroluje zda je datum validní, lze také data porovnávat, nebo přičítat k nim dni.<br/>
 ### Funkce
 |Název|Process_record()|
 |:---:|:---|
