@@ -40,9 +40,6 @@ def print_Extremes(Q_max : float, Q_min : float, desc_max : tuple, desc_min : tu
         print(f"Maximální průtok: {desc_max[0]}, {str(desc_max[1])}, {str(desc_max[4]).zfill(2)}.{str(desc_max[3]).zfill(2)}.{str(desc_max[2]).zfill(2)},{str(Q_max)}")
         print(f"Minimální průtok: {desc_min[0]}, {str(desc_min[1])}, {str(desc_min[4]).zfill(2)}.{str(desc_min[3]).zfill(2)}.{str(desc_min[2]).zfill(2)},{str(Q_min)}")
 
-def init_min_max(row) -> tuple:       # inicializace minimálního a maximálního průtoku pří načtení prvného řádku
-    return row[5], row[5], (row[0], row[1], row[2], row[3], row[4]), (row[0], row[1], row[2], row[3], row[4])
-
 def gap_detect(current_date, Date, gap_week : int) -> int:    # Detekce a výpis chybějících dní
     if current_date != None and current_date + datetime.timedelta(days=1) != Date:
         for i in range(1, int((Date - current_date).days)):
@@ -102,7 +99,10 @@ def analyze_by_day(reader, writer_week, writer_year) -> None:    # Načtení jed
             is_empty = True
             return 1
         if first_row:           # inicializace maximálního a minimálního průtoku
-            Q_min, Q_max, time_min, time_max = init_min_max(row)
+            Q_min = row[5]
+            Q_max = row[5]
+            time_min = (row[0], row[1], row[2], row[3], row[4])
+            time_max = (row[0], row[1], row[2], row[3], row[4])
             first_row = False
         gap_week = gap_detect(current_date, Date, gap_week)
         
@@ -141,7 +141,7 @@ def analyze_by_day(reader, writer_week, writer_year) -> None:    # Načtení jed
         print_Extremes(Q_max, Q_min, time_max, time_min)
 
 try:                                                                            # Otevření a zavření souboru
-    with open("Tests/Test_14.csv", encoding = "utf-8", newline = "") as r, \
+    with open("Tests/Test_13.csv", encoding = "utf-8", newline = "") as r, \
     open("vystup_7dni.csv", "w", encoding = "utf-8", newline = "") as w7, \
     open("vystup_rok.csv", "w", encoding = "utf-8", newline = "") as wr:
 
