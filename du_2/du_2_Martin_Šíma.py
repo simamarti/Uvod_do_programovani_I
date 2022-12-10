@@ -144,7 +144,7 @@ try:                                                                            
     with open("Tests/Test_1.csv", encoding = "utf-8", newline = "") as r, \
     open("vystup_7dni.csv", "w", encoding = "utf-8", newline = "") as w7, \
     open("vystup_rok.csv", "w", encoding = "utf-8", newline = "") as wr:
-
+   
         reader = csv.reader(r, delimiter = ",")
         writer_week = csv.writer(w7, delimiter = ",")
         writer_year = csv.writer(wr, delimiter = ",")
