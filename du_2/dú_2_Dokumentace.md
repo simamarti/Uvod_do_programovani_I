@@ -57,7 +57,7 @@ Následně program zkontroluje zda nenastala podmínka (součet dnů a mezer je 
 Nakonec je aktualizován maximální a minimální průtok a průtok je připočítán do sedmidenní a roční sumy.<br/>
 Po ukočení čtení ze souboru je do obou výstupních souborů zapsány zbylé průměry a na terminál jsou vypsány maximální a minimální průtoky.<br/> 
 ### Importované knihovny
-csv - umožňuje čtení a zápis do souboru formátu csv
+csv - umožňuje čtení a zápis do souboru formátu csv<br/>
 datetime - umožňuje ukládat data, kontroluje zda je datum validní, zde k datu přičítat (např. 1 den).<br/>
 ### Funkce
 |Název|Process_record()|
