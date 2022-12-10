@@ -56,6 +56,9 @@ Následně jsou detekovány případné mezery v datech. Mezery jsou zařazené 
 Následně program zkontroluje zda nenastala podmínka (součet dnů a mezer je větší nebo roven 7) pro zapsání sedmidenního průtoku do souboru ("vystup_7dni.csv"), popř. zda se již nezačal počítat další sedmidenní průtok (součet dnů a mezer je roven 0). Stejným způsoben je zkontrolována podmínka (aktuálně načítaný rok se liší od předchozího) pro zápis do souboru s ročními průtoky ("vystup_rok.csv").<br/>
 Nakonec je aktualizován maximální a minimální průtok a průtok je připočítán do sedmidenní a roční sumy.<br/>
 Po ukočení čtení ze souboru je do obou výstupních souborů zapsány zbylé průměry a na terminál jsou vypsány maximální a minimální průtoky.<br/> 
+### Importované knihovny
+csv - umožňuje čtení a zápis do souboru formátu csv
+datetime - umožňuje ukládat data, kontroluje zda je datum validní, zde k datu přičítat (např. 1 den).<br/>
 ### Funkce
 |Název|Process_record()|
 |:---:|:---|
