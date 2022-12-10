@@ -71,7 +71,7 @@ def analyze_by_day(reader, writer_week, writer_year) -> None:    # Načtení jed
     items = 0               # Počet načtených položek
     row = None              # Pole hodnot načtených z každého řádku   
     number = 0              # Hodnota průtoku
-    is_empty = False
+    is_empty = False        # Pokud bude soubor prázdny, proměnná bude nastavena na True
 
     for line in reader:                  # iterace přes všechny řádky souboru
         current_date = Date
@@ -141,7 +141,7 @@ def analyze_by_day(reader, writer_week, writer_year) -> None:    # Načtení jed
         print_Extremes(Q_max, Q_min, time_max, time_min)
 
 try:                                                                            # Otevření a zavření souboru
-    with open("Tests/Test_11.csv", encoding = "utf-8", newline = "") as r, \
+    with open("Tests/Test_14.csv", encoding = "utf-8", newline = "") as r, \
     open("vystup_7dni.csv", "w", encoding = "utf-8", newline = "") as w7, \
     open("vystup_rok.csv", "w", encoding = "utf-8", newline = "") as wr:
 
