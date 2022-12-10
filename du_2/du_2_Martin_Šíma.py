@@ -71,7 +71,7 @@ def analyze_by_day(reader, writer_week, writer_year) -> None:    # Načtení jed
     items = 0               # Počet načtených položek
     row = None              # Pole hodnot načtených z každého řádku   
     number = 0              # Hodnota průtoku
-    is_valid = False
+    is_empty = False
 
     for line in reader:                  # iterace přes všechny řádky souboru
         current_date = Date
@@ -79,27 +79,27 @@ def analyze_by_day(reader, writer_week, writer_year) -> None:    # Načtení jed
             row = [line[0], line[1], line[2].split(".")[2], line[2].split(".")[1], line[2].split(".")[0], line[3]]
         except IndexError:
             print(">> Špatný formát dat.")
-            is_valid = True
+            is_empty = True
             continue
             
         try:
             Date = datetime.date(int(row[2]), int(row[3]), int(row[4]))
         except ValueError:
             print(f">> Datum označnuje neexistující den v roce ({str(row[4]).zfill(2)}.{str(row[3]).zfill(2)}.{str(row[2]).zfill(2)})")
-            is_valid = True
+            is_empty = True
             continue
 
         try:
             number = float(row[5])
         except ValueError:
             print(">> Špatný datový typ průtoku, musí se jednat o reálné číslo.")
-            is_valid = True
+            is_empty = True
             continue
         
         if first_row == False and current_date >= Date:
             print(">> Data musí být v chronologickém pořadí.")
             print_rest(writer_week, writer_year, desc_week, desc_year, sum_week, sum_year, week_days, year_days)
-            is_valid = True
+            is_empty = True
             return 1
         if first_row:           # inicializace maximálního a minimálního průtoku
             Q_min, Q_max, time_min, time_max = init_min_max(row)
@@ -109,7 +109,7 @@ def analyze_by_day(reader, writer_week, writer_year) -> None:    # Načtení jed
         if number <=  0:
             print(f">> Dne {str(row[4]).zfill(2)}.{str(row[3]).zfill(2)}.{str(row[2]).zfill(2)} byl záporný, nebo nulový průtok.")
             gap_week += 1
-            is_valid = True
+            is_empty = True
             continue
                                             # Zápis do souboru týden
         if week_days + gap_week == 0:
@@ -131,9 +131,9 @@ def analyze_by_day(reader, writer_week, writer_year) -> None:    # Načtení jed
                                          # Započítání do průměrů týdne a roku
         time_min, time_max, sum_week , Q_min, Q_max, week_days, current_date, sum_year, year_days = process_record(time_min, time_max, sum_week , Q_min, Q_max, week_days, row, current_date, sum_year, year_days)
         items += 1
-        is_valid = True
+        is_empty = True
     print_rest(writer_week, writer_year, desc_week, desc_year, sum_week, sum_year, week_days, year_days) 
-    if not is_valid:
+    if not is_empty:
         print(">> Soubor je prázdný.")
     elif not items:
         print(">> Nebyly načteny žádné validní hodnoty.")
