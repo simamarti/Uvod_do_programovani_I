@@ -51,7 +51,7 @@ def gap_detect(current_date, Date, gap_week : int) -> int:    # Detekce a výpis
             gap_week += 1
     return gap_week
 
-def analyze_by_day(reader, r, writer_week, writer_year) -> None:    # Načtení jednoho záznamu, kontrola validity
+def analyze_by_day(reader, writer_week, writer_year) -> None:    # Načtení jednoho záznamu, kontrola validity
     
     sum_year = 0            # Součet dnů v roce
     sum_week = 0            # Součet dnů v týdnu
@@ -141,7 +141,7 @@ def analyze_by_day(reader, r, writer_week, writer_year) -> None:    # Načtení 
         print_Extremes(Q_max, Q_min, time_max, time_min)
 
 try:                                                                            # Otevření a zavření souboru
-    with open("Tests/Test_3.csv", encoding = "utf-8", newline = "") as r, \
+    with open("Tests/Test_11.csv", encoding = "utf-8", newline = "") as r, \
     open("vystup_7dni.csv", "w", encoding = "utf-8", newline = "") as w7, \
     open("vystup_rok.csv", "w", encoding = "utf-8", newline = "") as wr:
 
@@ -149,7 +149,7 @@ try:                                                                            
         writer_week = csv.writer(w7, delimiter = ",")
         writer_year = csv.writer(wr, delimiter = ",")
 
-        analyze_by_day(reader, r, writer_week, writer_year)
+        analyze_by_day(reader, writer_week, writer_year)
 
 except FileNotFoundError:
     print(">> Soubor nebyl nalezen.")
