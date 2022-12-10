@@ -19,12 +19,12 @@ def process_record(time_min : tuple, time_max : tuple, sum_week : float, Q_min :
     return time_min, time_max, sum_week , Q_min, Q_max, week_days, current_date, sum_year, year_days
 
 def print_week(writer_week, row, desc_week : tuple, sum_week : int, week_days : int) -> tuple:          # zápis týdne do souboru  
-    writer_week.writerow([desc_week[0], desc_week[1], f"{str(desc_week[4]).zfill(2)}.{str(desc_week[3]).zfill(2)}.{str(desc_week[2]).zfill(2)}",f"\t{round(sum_week/(week_days), 4):.04f}"])
+    writer_week.writerow([desc_week[0], desc_week[1], f"{desc_week[4].zfill(2)}.{desc_week[3].zfill(2)}.{desc_week[2]}",f"\t{round(sum_week/(week_days), 4):.04f}"])
     desc_week = (row[0], row[1], row[2], row[3], row[4])
     return desc_week
 
 def print_year(writer_year, row, desc_year : tuple, sum_year : int, year_days : int) -> tuple:      # zápis roku do souboru
-    writer_year.writerow([desc_year[0], desc_year[1], f"{str(desc_year[4]).zfill(2)}.{str(desc_year[3]).zfill(2)}.{str(desc_year[2])}", f"\t{round(sum_year/(year_days), 4):.04f}"])
+    writer_year.writerow([desc_year[0], desc_year[1], f"{desc_year[4].zfill(2)}.{desc_year[3].zfill(2)}.{desc_year[2]}", f"\t{round(sum_year/(year_days), 4):.04f}"])
     desc_year = (row[0], row[1], row[2], row[3], row[4])
     return desc_year
 
@@ -32,19 +32,19 @@ def print_rest( writer_week, writer_year, desc_week : tuple, desc_year : tuple, 
                 sum_year : int, week_days : int, year_days : int) -> None:                          # Výpis zbývajících dní a let
 
         if week_days:
-            writer_week.writerow([desc_week[0], desc_week[1], f"{str(desc_week[4]).zfill(2)}.{str(desc_week[3]).zfill(2)}.{str(desc_week[2])}", f"\t{round(sum_week/(week_days), 4):.04f}"])
+            writer_week.writerow([desc_week[0], desc_week[1], f"{desc_week[4].zfill(2)}.{desc_week[3].zfill(2)}.{desc_week[2]}", f"\t{round(sum_week/(week_days), 4):.04f}"])
         if year_days:
-            writer_year.writerow([desc_year[0], desc_year[1], f"{str(desc_year[4]).zfill(2)}.{str(desc_year[3]).zfill(2)}.{str(desc_year[2])}", f"\t{round(sum_year/(year_days), 4):.04f}"])
+            writer_year.writerow([desc_year[0], desc_year[1], f"{desc_year[4].zfill(2)}.{desc_year[3].zfill(2)}.{desc_year[2]}", f"\t{round(sum_year/(year_days), 4):.04f}"])
 
 def print_Extremes(Q_max : float, Q_min : float, desc_max : tuple, desc_min : tuple) -> None:       # Výpis maxilálního a minimálního průtoku
-        print(f"Maximální průtok: {desc_max[0]}, {str(desc_max[1])}, {str(desc_max[4]).zfill(2)}.{str(desc_max[3]).zfill(2)}.{str(desc_max[2]).zfill(2)},{str(Q_max)}")
-        print(f"Minimální průtok: {desc_min[0]}, {str(desc_min[1])}, {str(desc_min[4]).zfill(2)}.{str(desc_min[3]).zfill(2)}.{str(desc_min[2]).zfill(2)},{str(Q_min)}")
+        print(f"Maximální průtok: {desc_max[0]}, {desc_max[1]}, {desc_max[4].zfill(2)}.{desc_max[3].zfill(2)}.{desc_max[2].zfill(2)},{Q_max}")
+        print(f"Minimální průtok: {desc_min[0]}, {desc_min[1]}, {desc_min[4].zfill(2)}.{desc_min[3].zfill(2)}.{desc_min[2].zfill(2)},{Q_min}")
 
-def gap_detect(current_date, Date, gap_week : int) -> int:    # Detekce a výpis chybějících dní
-    if current_date != None and current_date + datetime.timedelta(days=1) != Date:
-        for i in range(1, int((Date - current_date).days)):
+def gap_detect(current_date, date, gap_week : int) -> int:    # Detekce a výpis chybějících dní
+    if current_date != None and current_date + datetime.timedelta(days=1) != date:
+        for i in range(1, int((date - current_date).days)):
             current = current_date + datetime.timedelta(i)
-            print(f">> V záznamu chybí datum: {str(current.day).zfill(2)}.{str(current.month).zfill(2)}.{str(current.year).zfill(2)}")
+            print(f">> V záznamu chybí datum: {current.day.zfill(2)}.{current.month.zfill(2)}.{current.year.zfill(2)}")
             gap_week += 1
     return gap_week
 
@@ -63,7 +63,7 @@ def analyze_by_day(reader, writer_week, writer_year) -> None:    # Načtení jed
     Q_max = None            # Maximální průtok
     time_min = None         # datum minimálního průtoku
     time_max = None         # datum maximálního průtoku
-    Date = None             # Nově načtené datum
+    date = None             # Nově načtené datum
     gap_week = 0            # Počet chybějících dní v týdnu
     items = 0               # Počet načtených položek
     row = None              # Pole hodnot načtených z každého řádku   
@@ -71,7 +71,7 @@ def analyze_by_day(reader, writer_week, writer_year) -> None:    # Načtení jed
     is_empty = False        # Pokud bude soubor prázdny, proměnná bude nastavena na True
 
     for line in reader:                  # iterace přes všechny řádky souboru
-        current_date = Date
+        current_date = date
         try:
             row = [line[0], line[1], line[2].split(".")[2], line[2].split(".")[1], line[2].split(".")[0], line[3]]
         except IndexError:
@@ -80,9 +80,9 @@ def analyze_by_day(reader, writer_week, writer_year) -> None:    # Načtení jed
             continue
             
         try:
-            Date = datetime.date(int(row[2]), int(row[3]), int(row[4]))
+            date = datetime.date(int(row[2]), int(row[3]), int(row[4]))
         except ValueError:
-            print(f">> Datum označnuje neexistující den v roce ({str(row[4]).zfill(2)}.{str(row[3]).zfill(2)}.{str(row[2]).zfill(2)})")
+            print(f">> Datum označnuje neexistující den v roce ({ow[4].zfill(2)}.{row[3].zfill(2)}.{row[2].zfill(2)})")
             is_empty = True
             continue
 
@@ -93,7 +93,7 @@ def analyze_by_day(reader, writer_week, writer_year) -> None:    # Načtení jed
             is_empty = True
             continue
         
-        if first_row == False and current_date >= Date:
+        if first_row == False and current_date >= date:
             print(">> Data musí být v chronologickém pořadí.")
             print_rest(writer_week, writer_year, desc_week, desc_year, sum_week, sum_year, week_days, year_days)
             is_empty = True
@@ -104,10 +104,10 @@ def analyze_by_day(reader, writer_week, writer_year) -> None:    # Načtení jed
             time_min = (row[0], row[1], row[2], row[3], row[4])
             time_max = (row[0], row[1], row[2], row[3], row[4])
             first_row = False
-        gap_week = gap_detect(current_date, Date, gap_week)
+        gap_week = gap_detect(current_date, date, gap_week)
         
         if number <=  0:
-            print(f">> Dne {str(row[4]).zfill(2)}.{str(row[3]).zfill(2)}.{str(row[2]).zfill(2)} byl záporný, nebo nulový průtok.")
+            print(f">> Dne {row[4].zfill(2)}.{row[3].zfill(2)}.{row[2].zfill(2)} byl záporný, nebo nulový průtok.")
             gap_week += 1
             is_empty = True
             continue
@@ -141,7 +141,7 @@ def analyze_by_day(reader, writer_week, writer_year) -> None:    # Načtení jed
         print_Extremes(Q_max, Q_min, time_max, time_min)
 
 try:                                                                            # Otevření a zavření souboru
-    with open("Tests/Test_13.csv", encoding = "utf-8", newline = "") as r, \
+    with open("Tests/Test_1.csv", encoding = "utf-8", newline = "") as r, \
     open("vystup_7dni.csv", "w", encoding = "utf-8", newline = "") as w7, \
     open("vystup_rok.csv", "w", encoding = "utf-8", newline = "") as wr:
 
