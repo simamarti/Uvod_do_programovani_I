@@ -6,29 +6,34 @@ import argparse
 def dist(source, finish) -> float:          # Vzdálenost dvou bodů
     return sqrt((finish[0] - source[0])**2 + (finish[1] - source[1])**2)
 
-def is_free(can : dict, house_adr : list, distance : float) -> int:
-    par = 0
+def is_private(can : dict, house_adr : list) -> int:
     if can['properties']['PRISTUP'] != "volně":
-        adr = can['properties']['STATIONNAME'].rsplit(' ',1)
-        if adr[0] == house_adr[0] and adr[1].split('/')[1] == house_adr[1]:
-            distance = 0
-            par = 1
-    return distance
+        if can['properties']['STATIONNAME'] == house_adr:
+            return True
+    return False
 
 def change_coord(adresses : dist) -> None:  # Převod souřadnic z WGS84 do jtsk
     wgstojtsk = Transformer.from_crs(4326,5514, always_xy = True)
     for item in adresses['features']:
         item['geometry']['coordinates'] = wgstojtsk.transform(*item['geometry']['coordinates'])
 
-def dist_calc(bins : list, coord_adr : list, adress : list) -> tuple:
-    min_dist = None
+def dist_calc(bins : list, coord_adr : list, adress : list) -> tuple:   # Kontejnery, souřadnice, číslo
+    min_dist = 10000
     id_number = None
-    for can in bins:
-        coord_bin = can['geometry']['coordinates']
-        distance = dist(coord_adr, coord_bin)
-        if min_dist == None or min_dist > distance:
-            id_number = can['properties']['ID']
-            min_dist = is_free(can, adress, distance)
+    for can in bins: 
+        if is_private(can, adress):
+            min_dist = 0
+            id_number = can['properties']['ID'] 
+            break
+        if can['properties']['PRISTUP'] == "volně":
+            coord_bin = can['geometry']['coordinates']
+            distance = dist(coord_adr, coord_bin)
+            if min_dist > distance:
+                min_dist = distance
+                id_number = can['properties']['ID'] 
+    if min_dist >= 10000:
+        print(">> Minimální vzdálenost přesáhla stanovený limit (10 km).")
+        exit(0)
     return min_dist, id_number
 
 def process(adresses : dist, bins : dist) -> tuple:
@@ -42,11 +47,10 @@ def process(adresses : dist, bins : dist) -> tuple:
     id_number = 0
     for item in adresses['features']:
         coord_adr = item['geometry']['coordinates']
+        house_adr = f"{item['properties']['addr:street']} {item['properties']['addr:housenumber']}"
+
         counter += 1
-        number = item['properties']['addr:housenumber'].split('/')
-        if len(number) == 2:
-            number = item['properties']['addr:housenumber'].split('/')[1]
-        house_adr = [item['properties']['addr:street'], number]
+
         min_distance, id_number = dist_calc(bins['features'], coord_adr, house_adr)
         item['kontejner'] = id_number
         dist_array.append(min_distance)
@@ -55,9 +59,9 @@ def process(adresses : dist, bins : dist) -> tuple:
             print(">> minimální vzdálenost k některému kontejneru přesáhla 10 km.") 
             exit(1)
         if max_dist <= min_distance:
+            print(f"{adress},{max_dist}")
             max_dist = min_distance
             adress = [item['properties']['addr:street'], item['properties']['addr:housenumber']]
-        min_distance = 0
         # Zápis do souboru adresy_kontejnery.geojson
     with open("adresy_kontejnery.geojson", "w", encoding = 'utf-8') as write_json:
         json.dump(adresses, write_json, ensure_ascii = False, indent = 2)
