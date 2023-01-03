@@ -7,9 +7,12 @@ Vstupní soubory jsou slovníky (formát geojson).
 Vstupní soubory mají klíč "features". Pod tímto klíčet je pole. V každém prvku pole je další slovník, který obsahuje klíče "properties" a "geometry". Pod klíčem "geometry" je další slovník s informacemi o adrese. Pod klíčem "geometry" se nachází další slovník s klíčem "coordinates", v kterém se nachází poles se souřadnicemi.<br/>
 ### Prametry programu
 Pokud není dáno jinak, program hledá a načítá souboru s názvem adresy.geojson a kontejnery.geojson.<br/>
-Pokud se do příkazového řádku za příkaz pro spuštění programu < py -u "du_3.py"> zde zadat volitelné parametry:<br/>
-"-a <název souboru>"  program použive jako adresy uložené v zadaném souboru<br/> 
-"-k <název souboru>"  program použive jako kontejnery uložené v zadaném souboru<br/> 
+Pokud se do příkazového řádku za příkaz pro spuštění programu < py -u "du_3.py"> zde zadat volitelné parametry. Parametry lze libovolně kombinovat<br/>
+"-a <název souboru>"  program použije jako adresy uložené v zadaném souboru<br/> 
+"-k <název souboru>"  program použije jako kontejnery uložené v zadaném souboru<br/> 
+
+Příklad: "py -u "du_3.py" -a adresy2.geojson -k kontejnry2.geojson"
+
 ### Chybové hlášky 
 Pokud nastane výjimka, uživatel o tom bude informován v terminálu chybovou hláškou.
 
