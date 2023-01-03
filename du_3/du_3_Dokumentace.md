@@ -31,6 +31,58 @@ Pokud se adresa kontejneru rovná adrese domu, je nejbližší vzdálenost ke ko
 Program na konci svého běhu uloží do pracovního adresáře soubor s názvem "adresy_kontejnery.geojson". Tento soubor má stejnou strukturu jako vstupní soubor adres. Pouze je u každé adresy přidaný klíč "kontejner" s uloženým ID nejbližšího kontejneru.
 
 ## Komentář ke zdrojovému kódu
-## Zpracování dat
-## Importované knihovny
-pyproj - metoda transformer - převádí souřadnicové systémy mezi sebou
+### Zpracování dat
+### Importované knihovny
+pyproj (metoda transformer) - převádí souřadnicové systémy mezi sebou<br/>
+json - knihovna ke zpracovnání souborů formátu geojson
+aargparse - knihovna sloužící k nastavení parametrů programu
+
+### Funkce
+|Název|dist()|
+|:---:|:---|
+|Popis|Funkce počítá vzdálenost mezi dvěma body|
+|Argumenty|source - počáteční bod (pole se souřadnicemi x, y)|
+||finish - koncový bod (pole se souřadnicemi x, y)|
+|Návratová hodnota| vzdálenost mezi body|
+
+|Název|is_private()|
+|:---:|:---|
+|Popis|Funkce určí zda má daná adresa vlastní kontejner|
+|Argumenty|can - slovník s informacemi o kontejneru|
+||house_adr - řetezec s adresou domu|
+|Návratová hodnota| bool - True/False|
+
+|Název|change_coord()|
+|:---:|:---|
+|Popis|Funkce souřařadnice z WGS do S-JTSK|
+|Argumenty|adresses - slovník se všemi adresami|
+|Návratová hodnota|None|
+
+|Název|dist_calc()|
+|:---:|:---|
+|Popis|Funkce určí nejbližší kontejner a jeho vzdálenost|
+|Argumenty|bins - slovník se všemi kontejnery|
+||coord_adr - pole se souřadnicemi adresy|
+||adresss - pole s adresou dommu|
+|Návratová hodnota|min_dist - vzdálenost k nejbližšímu kontejneru|
+||id_number - ID nejbližšího kontejneru|
+
+|Název|upload_stat()|
+|:---:|:---|
+|Popis|Funkce aktualizuje adresu s nejvzdálenějším kontejnerem a součet vzdáleností|
+|Argumenty|adresss - pole s adresou domu|
+||item - slovník s adresou|
+||max_dist - minimální vzdálenost ke kontejneru u adresy s nejvzdálenějším kontejnerem|
+|Návratová hodnota|adresss - pole s adresou domu|
+||item - slovník s adresou|
+||max_dist - minimální vzdálenost ke kontejneru u adresy s nejvzdálenějším kontejnerem|
+
+|Název|dist_calc()|
+|:---:|:---|
+|Popis|Funkce určí nejbližší kontejner a jeho vzdálenost|
+|Argumenty|bins - slovník se všemi kontejnery|
+||coord_adr - pole se souřadnicemi adresy|
+||adresss - pole s adresou dommu|
+|Návratová hodnota|min_dist - vzdálenost k nejbližšímu kontejneru|
+||id_number - ID nejbližšího kontejneru|
+
