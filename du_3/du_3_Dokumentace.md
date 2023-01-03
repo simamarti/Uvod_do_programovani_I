@@ -1,6 +1,6 @@
 # Domácí úkol 3 - dokumentace
 ## Uživatelský manuál
-Program načte na vstupu soubory *.geojson s uloženými adresami a kontejnery. Program vypočítá průměrnou vzdálenost k nejbližšímu kontejneru, počet načtených adres a kontejner, medián vzdálenotí k nejbližšímu kontejneru a adresu, z které je to k nejbližšímu kontejneru nejdále. Dále se do pracovního adresáře uloží soubor s názvem "dresy_kontejnery.geojson", ve kterém je ke každé adrese přiřazeno ID nejbližšího, obyvatelům domu přístupného, kontejneru.
+Program načte na vstupu soubory *.geojson s uloženými adresami a kontejnery. Program vypočítá průměrnou vzdálenost k nejbližšímu kontejneru, počet načtených adres a kontejner, medián vzdálenotí k nejbližšímu kontejneru a adresu, z které je to k nejbližšímu kontejneru nejdále. Dále se do pracovního adresáře uloží soubor s názvem "adresy_kontejnery.geojson", ve kterém je ke každé adrese přiřazeno ID nejbližšího, obyvatelům domu přístupného, kontejneru.
 ### Formát vstupního souboru
 Vstupní soubory jsou slovníky (formát geojson). 
 Vstupní soubory mají klíč "features". Pod tímto klíčet je pole. V každém prvku pole je další slovník, který obsahuje klíče "properties" a "geometry". Pod klíčem "geometry" je další slovník s informacemi o adrese. Pod klíčem "geometry" se nachází další slovník s klíčem "coordinates", v kterém se nachází poles se souřadnicemi.<br/>
@@ -9,5 +9,10 @@ Pokud nastane výjimka, uživatel o tom bude informován v terminálu chybovou h
 
 |Číslo chyby|Chyba|Výpis na terminál|
 |:---:|:---:|:---:|
-|č. 1|Ve slovníku se daný klíč nenachází|">> Klíč nebyl ve slovníku nalezen."|
-|č. 2|||
+|č. 1|Soubor neexistuje|">> Soubor s názvem <název souboru> neexistuje."|
+|č. 2|Uživatel nemá právo číst soubor|">> Ke čtení souboru s názvem <název souboru> nemáte práva."|
+|č. 3|Ve slovníku se daný klíč nenachází|">> Klíč nebyl ve slovníku nalezen."|
+|č. 4|Souřadnice v souborech nejsou čísla|">> Špatný formát vstupu."|
+
+Každý kontejner má pod klíčem "properties" klíč "PRISTUP", v kterém je informace o přístupnosti kontejneru. Tento parametr nabývá dvou stavů "volně", nebo "obyvatelům domu". Hodnotu "obyvatelům domu" mají kontejnery, které jsou přístupné pouze obyvatelům daného domu.<br/>
+Pokud se adresa kontejneru rovná adrese domu, je nejbližší vzdálenost ke kontejneru nastave na 0, a tato nula je i započtena po průměru. Pokud adresa nemá vlastní kontejner, nejbližší kontejner je počítán poze z "volných" kontejnerů (klíč "PRISTUP" se rovná "volně").
