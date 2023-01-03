@@ -7,7 +7,7 @@ Vstupní soubory jsou slovníky (formát geojson).
 Vstupní soubory mají klíč "features". Pod tímto klíčet je pole. V každém prvku pole je další slovník, který obsahuje klíče "properties" a "geometry". Pod klíčem "geometry" je další slovník s informacemi o adrese. Pod klíčem "geometry" se nachází další slovník s klíčem "coordinates", v kterém se nachází poles se souřadnicemi.<br/>
 ### Prametry programu
 Pokud není dáno jinak, program hledá a načítá souboru s názvem adresy.geojson a kontejnery.geojson.<br/>
-Pokud se do příkazového řádku za příkaz pro spuštění programu < py -u "du_3.py"> zde zadat volitelné parametry. Parametry lze libovolně kombinovat<br/>
+Pokud se do příkazového řádku za příkaz pro spuštění programu "py -u du_3.py" zde zadat volitelné parametry. Parametry lze libovolně kombinovat<br/>
 "-a <název souboru>"  program použije jako adresy uložené v zadaném souboru<br/> 
 "-k <název souboru>"  program použije jako kontejnery uložené v zadaném souboru<br/> 
 
@@ -28,3 +28,4 @@ Každý kontejner má pod klíčem "properties" klíč "PRISTUP", v kterém je i
 Pokud se adresa kontejneru rovná adrese domu, je nejbližší vzdálenost ke kontejneru nastave na 0, a tato nula je i započtena po průměru. Pokud adresa nemá vlastní kontejner, nejbližší kontejner je počítán poze z "volných" kontejnerů (klíč "PRISTUP" se rovná "volně").
 
 ## Výstupní soubor
+Program na konci svého běhu uloží do pracovního adresáře soubor s názvem "adresy_kontejnery.geojson". Tento soubor má stejnou strukturu jako vstupní soubor adres. Pouze je u každé adresy přidaný klíč "kontejner" s uloženým ID nejbližšího kontejneru.
