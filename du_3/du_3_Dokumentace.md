@@ -77,12 +77,31 @@ aargparse - knihovna sloužící k nastavení parametrů programu
 ||item - slovník s adresou|
 ||max_dist - minimální vzdálenost ke kontejneru u adresy s nejvzdálenějším kontejnerem|
 
-|Název|dist_calc()|
+|Název|file_ID()|
 |:---:|:---|
-|Popis|Funkce určí nejbližší kontejner a jeho vzdálenost|
-|Argumenty|bins - slovník se všemi kontejnery|
-||coord_adr - pole se souřadnicemi adresy|
-||adresss - pole s adresou dommu|
-|Návratová hodnota|min_dist - vzdálenost k nejbližšímu kontejneru|
-||id_number - ID nejbližšího kontejneru|
+|Popis|Funkce uloží do souboru "adresy_kontejnery.geojson" slovník s adresama|
+|Argumenty|adresses - slovník s adresama s přidanými ID nejbližších kontejnerů|
+|Návratová hodnota|None|
 
+|Název|median_calc()|
+|:---:|:---|
+|Popis|Funkce vrátí medián zadaného pole|
+|Argumenty|dist_array - pole se vzdálenostmi k nejbližím kontejnerů u jednotlivých adres|
+||counter - počet adres v poli|
+|Návratová hodnota|medián - medián pole|
+
+|Název|process()|
+|:---:|:---|
+|Popis|Hlavní funkce, prochází všechny adresy a počítá nejblišší kontejnery|
+|Argumenty|adresses - slovník s adresama|
+||bins - slovník s kontejnery|
+|Návratová hodnota|průměr minimálních vzdáleností|
+||med - medián minimálních vzdáleností|
+||adress - adresa, z které je to nejdále ke kontejneru|
+||max_dist - vzdálenost k adrese nejvzdálenější od kontejneru|
+
+|Název|file_open()|
+|:---:|:---|
+|Popis|Funkce otevře soubor s daným jménem a obsah uloží do proměnné|
+|Argumenty|file_name - jméno souboru|
+|Návratová hodnota|dictionary - slovník s načtenými dat ze souboru|
