@@ -29,3 +29,8 @@ Pokud se adresa kontejneru rovná adrese domu, je nejbližší vzdálenost ke ko
 
 ## Výstupní soubor
 Program na konci svého běhu uloží do pracovního adresáře soubor s názvem "adresy_kontejnery.geojson". Tento soubor má stejnou strukturu jako vstupní soubor adres. Pouze je u každé adresy přidaný klíč "kontejner" s uloženým ID nejbližšího kontejneru.
+
+## Komentář ke zdrojovému kódu
+## Zpracování dat
+## Importované knihovny
+pyproj - metoda transformer - převádí souřadnicové systémy mezi sebou
