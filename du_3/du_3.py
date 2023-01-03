@@ -18,7 +18,7 @@ def change_coord(adresses : dist) -> None:  # Převod souřadnic z WGS84 do jtsk
         item['geometry']['coordinates'] = wgstojtsk.transform(*item['geometry']['coordinates'])
 
 def dist_calc(bins : list, coord_adr : list, adress : list) -> tuple:   # Kontejnery, souřadnice, číslo
-    min_dist = 10000
+    min_dist = None
     id_number = None
     for can in bins: 
         if is_private(can, adress):
@@ -28,13 +28,17 @@ def dist_calc(bins : list, coord_adr : list, adress : list) -> tuple:   # Kontej
         if can['properties']['PRISTUP'] == "volně":
             coord_bin = can['geometry']['coordinates']
             distance = dist(coord_adr, coord_bin)
-            if min_dist > distance:
+            if min_dist == None or min_dist > distance:
                 min_dist = distance
                 id_number = can['properties']['ID'] 
-    if min_dist >= 10000:
-        print(">> Minimální vzdálenost přesáhla stanovený limit (10 km).")
-        exit(0)
     return min_dist, id_number
+    
+def upload_stat(adress : list, item : dict, max_dist : float, sum : float, distance : float) -> tuple:
+    sum += distance
+    if max_dist <= distance:
+        max_dist = distance
+        adress = [item['properties']['addr:street'], item['properties']['addr:housenumber']]
+    return adress, max_dist, sum, distance
 
 def process(adresses : dist, bins : dist) -> tuple:
     average = 0
@@ -48,20 +52,13 @@ def process(adresses : dist, bins : dist) -> tuple:
     for item in adresses['features']:
         coord_adr = item['geometry']['coordinates']
         house_adr = f"{item['properties']['addr:street']} {item['properties']['addr:housenumber']}"
-
         counter += 1
-
         min_distance, id_number = dist_calc(bins['features'], coord_adr, house_adr)
+        if min_distance >= 10000:
+            raise SystemExit(">> Minimální vzdálenost přesáhla stanovený limit (10 km). Program byl ukončen")
         item['kontejner'] = id_number
         dist_array.append(min_distance)
-        average += min_distance
-        if min_distance > 10000:
-            print(">> minimální vzdálenost k některému kontejneru přesáhla 10 km.") 
-            exit(1)
-        if max_dist <= min_distance:
-            print(f"{adress},{max_dist}")
-            max_dist = min_distance
-            adress = [item['properties']['addr:street'], item['properties']['addr:housenumber']]
+        adress, max_dist, average, min_distance = upload_stat(adress, item, max_dist, average, min_distance)
         # Zápis do souboru adresy_kontejnery.geojson
     with open("adresy_kontejnery.geojson", "w", encoding = 'utf-8') as write_json:
         json.dump(adresses, write_json, ensure_ascii = False, indent = 2)
@@ -73,36 +70,45 @@ def process(adresses : dist, bins : dist) -> tuple:
         median = (dist_array[counter//2 - 1] + dist_array[counter//2])/2
     return average/counter, median, adress, max_dist
 
-try:
+def file_open(file_name : str) -> dict:
+    try:
+        with open(file_name, "r", encoding = 'utf-8') as file:
+            dictionary = json.load(file)
+        return dictionary
+    except FileNotFoundError:
+        raise SystemExit(f">> Soubor s názvem <{file_name}> neexistuje.")
+    except PermissionError:
+        raise SystemExit(f">> Ke čtení souboru s názvem <{file_name}> nemáte práva.")
+
+try:    
     adresses = None         # slovník s adresami
     bins = None             # slovník s kontejnery
     far_adress = None       # Adresa, z které je to ke kontejneru nejdále
     average = 0             # Průměrná minimální vzdálenost
         # Parametry programu
     parser = argparse.ArgumentParser()
-    parser.add_argument("-a","--adress", action = "store", dest = "adr", default = "adresy copy.geojson")
-    parser.add_argument("-k","--container", action = "store", dest = "cont", default = "kontejnery copy.json")
+    parser.add_argument("-a","--adress", action = "store", dest = "adr", default = "adresy.geojson")
+    parser.add_argument("-k","--container", action = "store", dest = "cont", default = 'kontejnery.json')
     arguments = parser.parse_args()
 
-    with open(arguments.adr, "r", encoding = 'utf-8') as adr, \
-        open(arguments.cont, "r", encoding = 'utf-8') as cont:
-        adresses = json.load(adr)
-        bins = json.load(cont)
-        print(f"Počet načtených adres: {len(adresses['features'])}")
-        print(f"Počet načtených kontejnerů: {len(bins['features'])}")
+    adresses = file_open(arguments.adr)
+    bins = file_open(arguments.cont)   
+
+    print(f"Počet načtených adres: {len(adresses['features']):.0f}")
+    print(f"Počet načtených kontejnerů: {len(bins['features']):.0f}")
             # Převod WGS84 na S-JTSK
-        change_coord(adresses)
+    change_coord(adresses)
         #change_coord(bins)
-        if  not len(bins['features']) or not len(adresses['features']):
-            print(">> nebyly načteny žádné adresy nebo žádné veřejné kontejnery.")
-        else:
-            average, median, far_adress, max_dist = process(adresses, bins)
-            print(f"Prumerná minimální vzdalenost ke kontejneru je {round(average, 0)} m.")
-            print(f"Medián minimálních vzdáleností ke kontejnerům je {round(median, 0)} m.")
-            print(f"Nejdále ke kontejneru je z adresy {far_adress[0]} {far_adress[1]} a to {round(max_dist, 0)} m.")
-except FileNotFoundError:
-    print(">> Soubor s daným jménem neexistuje.")
-except PermissionError:
-    print(">> Ke čtení souboru nemáte práva.")
+    if  not len(bins['features']) or not len(adresses['features']):
+        print(">> nebyly načteny žádné adresy nebo žádné veřejné kontejnery.")
+    else:
+        average, median, far_adress, max_dist = process(adresses, bins)
+        print(f"Prumerná minimální vzdalenost ke kontejneru je {round(average, 0):.0f} m.")
+        print(f"Medián minimálních vzdáleností ke kontejnerům je {round(median, 0):.0f} m.")
+        print(f"Nejdále ke kontejneru je z adresy {far_adress[0]} {far_adress[1]} a to {round(max_dist, 0):.0f} m.")
 except KeyError:
     print(">> Klíč nebyl ve slovníku nalezen.")
+except ValueError:
+    print(">> Špatný formát vstupu.")
+except SystemExit as sysErr:
+    print(sysErr)
