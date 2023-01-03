@@ -34,8 +34,8 @@ Program na konci svého běhu uloží do pracovního adresáře soubor s názvem
 ### Zpracování dat
 ### Importované knihovny
 pyproj (metoda transformer) - převádí souřadnicové systémy mezi sebou<br/>
-json - knihovna ke zpracovnání souborů formátu geojson
-aargparse - knihovna sloužící k nastavení parametrů programu
+json - knihovna ke zpracovnání souborů formátu geojson<br/>
+aargparse - knihovna sloužící k nastavení parametrů programu<br/>
 
 ### Funkce
 |Název|dist()|
