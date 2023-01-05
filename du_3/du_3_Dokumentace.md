@@ -20,9 +20,10 @@ Pokud nastane výjimka, uživatel o tom bude informován v terminálu chybovou h
 |:---:|:---:|:---:|
 |č. 1|Soubor neexistuje|">> Soubor s názvem <název souboru> neexistuje."|
 |č. 2|Uživatel nemá právo číst soubor|">> Ke čtení souboru s názvem <název souboru> nemáte práva."|
-|č. 3|Ve slovníku se daný klíč nenachází|">> Klíč nebyl ve slovníku nalezen."|
-|č. 4|Souřadnice v souborech nejsou čísla|">> Špatný formát vstupu."|
-|č. 5|Minimální vzdálenost pro některou adresu vejde více než 10 000 m|">> Minimální vzdálenost přesáhla stanovený limit (10 km). Program byl ukončen."|
+|č. 3|Nebyly načteny žádné adresy ani kontejnery|">> nebyly načteny žádné adresy nebo žádné veřejné kontejnery, program byl ukončen."|
+|č. 4|Ve slovníku se daný klíč nenachází|">> Klíč nebyl ve slovníku nalezen."|
+|č. 5|Souřadnice v souborech nejsou čísla|">> Špatný formát vstupu."|
+|č. 6|Minimální vzdálenost pro některou adresu vejde více než 10 000 m|">> Minimální vzdálenost přesáhla stanovený limit (10 km). Program byl ukončen."|
 
 Každý kontejner má pod klíčem "properties" klíč "PRISTUP", v kterém je informace o přístupnosti kontejneru. Tento parametr nabývá dvou stavů "volně", nebo "obyvatelům domu". Hodnotu "obyvatelům domu" mají kontejnery, které jsou přístupné pouze obyvatelům daného domu.<br/>
 Pokud se adresa kontejneru rovná adrese domu, je nejbližší vzdálenost ke kontejneru nastave na 0, a tato nula je i započtena po průměru. Pokud adresa nemá vlastní kontejner, nejbližší kontejner je počítán poze z "volných" kontejnerů (klíč "PRISTUP" se rovná "volně").
@@ -32,6 +33,11 @@ Program na konci svého běhu uloží do pracovního adresáře soubor s názvem
 
 ## Komentář ke zdrojovému kódu
 ### Zpracování dat
+Po spuštění programu se pomocí funkce file_open() načtou pomocí knihovny json soubory s názvem "adresy.geojson" a "kontejnery.geojson", popř. soubory s názvama zadanými v parametrech programu.<br/>
+Poté se souřadnicový systém adresních bodů převede z WGS do S-JTSK, aby bylo možné počítat vzdálenosti pomocí pythagorovy věty. Po kontrole počtu adres a kontejnerů se pro každou adresu vypočítá vzdálenost k nejbližšímu kontejneru a jeho ID. Při tomto výpočtu je postupně u každého kontejneru zkontroluje, zda má stejnou adresu. Pokud to tak je minimální vzdálenost ke kontejneru je automaticky nastavena na 0. Pokud na adrese žádný privátní kontejner není, jsou pro výpočet minimální vzdálenosti brány v potaz pouze kontejnery s hodnotou "volně" v klíči 'PRISTUP'. Pokud je některá minimální vzdálenost větší než 10 km, program je automaticky ukončen.<br/>
+Do proměnné s adresami je ke každé přidán klíč 'kontejner' s hodnotou ID nejbližšího kontejneru. Vzdálenost k nejbližšímu kontejneru je také přidána do pole s minimálními vzdálenostmi všech kontejnerů.<br/>
+Po zpracování každé adresy je aktualizována suma vzdáleností, z které je poté počítán průměr a adresní bod, z kterého je to ke kontejneru nejdále a je také uložena vzdálenost k tomuto adressnímu bodu. 
+
 ### Importované knihovny
 pyproj (metoda transformer) - převádí souřadnicové systémy mezi sebou<br/>
 json - knihovna ke zpracovnání souborů formátu geojson<br/>
