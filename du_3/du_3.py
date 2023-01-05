@@ -95,7 +95,7 @@ try:
         # Parametry programu
     parser = argparse.ArgumentParser()
     parser.add_argument("-a","--adress", action = "store", dest = "adr", default = "adresy.geojson")
-    parser.add_argument("-k","--container", action = "store", dest = "cont", default = 'kontejnery.json')
+    parser.add_argument("-k","--container", action = "store", dest = "cont", default = 'kontejnery.geojson')
     arguments = parser.parse_args()
 
     adresses = file_open(arguments.adr)
