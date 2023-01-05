@@ -36,7 +36,9 @@ Program na konci svého běhu uloží do pracovního adresáře soubor s názvem
 Po spuštění programu se pomocí funkce file_open() načtou pomocí knihovny json soubory s názvem "adresy.geojson" a "kontejnery.geojson", popř. soubory s názvama zadanými v parametrech programu.<br/>
 Poté se souřadnicový systém adresních bodů převede z WGS do S-JTSK, aby bylo možné počítat vzdálenosti pomocí pythagorovy věty. Po kontrole počtu adres a kontejnerů se pro každou adresu vypočítá vzdálenost k nejbližšímu kontejneru a jeho ID. Při tomto výpočtu je postupně u každého kontejneru zkontroluje, zda má stejnou adresu. Pokud to tak je minimální vzdálenost ke kontejneru je automaticky nastavena na 0. Pokud na adrese žádný privátní kontejner není, jsou pro výpočet minimální vzdálenosti brány v potaz pouze kontejnery s hodnotou "volně" v klíči 'PRISTUP'. Pokud je některá minimální vzdálenost větší než 10 km, program je automaticky ukončen.<br/>
 Do proměnné s adresami je ke každé přidán klíč 'kontejner' s hodnotou ID nejbližšího kontejneru. Vzdálenost k nejbližšímu kontejneru je také přidána do pole s minimálními vzdálenostmi všech kontejnerů.<br/>
-Po zpracování každé adresy je aktualizována suma vzdáleností, z které je poté počítán průměr a adresní bod, z kterého je to ke kontejneru nejdále a je také uložena vzdálenost k tomuto adressnímu bodu. 
+Po zpracování každé adresy je aktualizována suma vzdáleností, z které je poté počítán průměr a adresní bod, z kterého je to ke kontejneru nejdále a je také uložena vzdálenost k tomuto adressnímu bodu.<br/>
+Nakonec je proměnná s adresními aktualizovanými o ID nejbližšího kontejneru uložena do souboru "adresy_kontejnery.geojson". Pole minimálních vzdáleností je seřazeno a je z něj vypočten medián.<br/>
+Jako výstup na termínál je vypsán počet adresních bodů a kontejnerů, průměrná minimální vzdálenostke kontejnerům, medián minimálních vzdáleností a z které adresy je to nejdále ke kontejneru a vzdálenost k němu.<br/>
 
 ### Importované knihovny
 pyproj (metoda transformer) - převádí souřadnicové systémy mezi sebou<br/>
