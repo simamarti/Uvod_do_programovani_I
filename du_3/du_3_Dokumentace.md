@@ -54,7 +54,7 @@ argparse - knihovna sloužící k nastavení parametrů programu<br/>
 ||finish - koncový bod (pole se souřadnicemi x, y)|
 |Návratová hodnota| vzdálenost mezi body|
 
-|Název|is_private()|
+|Název|is_private_for_adress()|
 |:---:|:---|
 |Popis|Funkce určí zda má daná adresa vlastní kontejner|
 |Argumenty|can - slovník s informacemi o kontejneru|
@@ -76,7 +76,7 @@ argparse - knihovna sloužící k nastavení parametrů programu<br/>
 |Návratová hodnota|min_dist - vzdálenost k nejbližšímu kontejneru|
 ||id_number - ID nejbližšího kontejneru|
 
-|Název|upload_stat()|
+|Název|update_stat()|
 |:---:|:---|
 |Popis|Funkce aktualizuje adresu s nejvzdálenějším kontejnerem a součet vzdáleností|
 |Argumenty|adresss - pole s adresou domu|
@@ -86,7 +86,7 @@ argparse - knihovna sloužící k nastavení parametrů programu<br/>
 ||item - slovník s adresou|
 ||max_dist - minimální vzdálenost ke kontejneru u adresy s nejvzdálenějším kontejnerem|
 
-|Název|file_ID()|
+|Název|write_file_with_ID()|
 |:---:|:---|
 |Popis|Funkce uloží do souboru "adresy_kontejnery.geojson" slovník s adresami|
 |Argumenty|adresses - slovník s adresama s přidanými ID nejbližších kontejnerů|
