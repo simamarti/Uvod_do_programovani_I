@@ -32,14 +32,14 @@ def dist_calc(bins : list, coord_adr : list, adress : list) -> tuple:   # Kontej
                 id_number = can['properties']['ID'] 
     return min_dist, id_number
     
-def upload_stat(adress : list, item : dict, max_dist : float, sum : float, distance : float) -> tuple:
+def update_stat(adress : list, item : dict, max_dist : float, sum : float, distance : float) -> tuple:
     sum += distance
     if max_dist <= distance:
         max_dist = distance
         adress = [item['properties']['addr:street'], item['properties']['addr:housenumber']]
     return adress, max_dist, sum, distance
 
-def file_ID(adresses : dict) -> None:
+def write_file_with_ID(adresses : dict) -> None:
     with open("adresy_kontejnery.geojson", "w", encoding = 'utf-8') as write_json:
         json.dump(adresses, write_json, ensure_ascii = False, indent = 2)
 
@@ -70,9 +70,9 @@ def process(adresses : dist, bins : dist) -> tuple:
             raise SystemExit(">> Minimální vzdálenost přesáhla stanovený limit (10 km). Program byl ukončen.")
         item['kontejner'] = id_number
         dist_array.append(min_distance)
-        adress, max_dist, suma, min_distance = upload_stat(adress, item, max_dist, suma, min_distance)
+        adress, max_dist, suma, min_distance = update_stat(adress, item, max_dist, suma, min_distance)
     # Zápis do souboru adresy_kontejnery.geojson
-    file_ID(adresses)
+    write_file_with_ID(adresses)
     # Výpočet mediánu
     median = median_calc(dist_array, counter)
     return suma/counter, median, adress, max_dist
