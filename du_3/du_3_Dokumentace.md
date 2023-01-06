@@ -5,28 +5,28 @@ Program načte na vstupu soubory *.geojson s uloženými adresami a kontejnery. 
 ### Formát vstupního souboru
 Vstupní soubory jsou slovníky (formát geojson). 
 Vstupní soubory mají klíč "features". Pod tímto klíčet je pole. V každém prvku pole je další slovník, který obsahuje klíče "properties" a "geometry". Pod klíčem "geometry" je další slovník s informacemi o adrese. Pod klíčem "geometry" se nachází další slovník s klíčem "coordinates", ve kterém se nachází pole se souřadnicemi.<br/>
-Vstupní soubor
-  ...
-  "features": [
-    {
-     ...,
-      "properties": {
-        ...
-        "addr:housenumber": "52/8",
-        ...
-        "addr:street": "Valentinská",
-        ...
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          14.4165887,
-          50.0882606
-        ]
-      },
-      "id": "node/290026925"
-    },
-    ...
+Vstupní soubor<br/>
+  ...<br/>
+  "features": [<br/>
+    {<br/>
+     ...,<br/>
+      "properties": {<br/>
+        ...<br/>
+        "addr:housenumber": "52/8",<br/>
+        ...<br/>
+        "addr:street": "Valentinská",<br/>
+        ...<br/>
+      },<br/>
+      "geometry": {<br/>
+        "type": "Point",<br/>
+        "coordinates": [<br/>
+          14.4165887,<br/>
+          50.0882606<br/>
+        ]<br/>
+      },<br/>
+      "id": "node/290026925"<br/>
+    },<br/>
+    ...<br/>
 ### Parametry programu
 Pokud není dáno jinak, program hledá a načítá souboru s názvem adresy.geojson a kontejnery.geojson.<br/>
 Pokud se do příkazového řádku za příkaz pro spuštění programu "py -u du_3.py" lze zadat volitelné parametry. Parametry lze libovolně kombinovat<br/>
