@@ -5,7 +5,7 @@ import argparse
 def dist(source :list, finish : list) -> float:          # Vzdálenost dvou bodů
     return ((finish[0] - source[0])**2 + (finish[1] - source[1])**2)**0.5
 
-def is_private(can : dict, house_adr : str) -> bool:
+def is_private_for_adress(can : dict, house_adr : str) -> bool:
     if can['properties']['PRISTUP'] != "volně":
         if can['properties']['STATIONNAME'] == house_adr:
             return True
@@ -20,7 +20,7 @@ def dist_calc(bins : list, coord_adr : list, adress : list) -> tuple:   # Kontej
     min_dist = None
     id_number = None
     for can in bins: 
-        if is_private(can, adress):
+        if is_private_for_adress(can, adress):
             min_dist = 0
             id_number = can['properties']['ID'] 
             break
