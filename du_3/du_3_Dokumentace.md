@@ -4,7 +4,7 @@ Program načte na vstupu soubory *.geojson s uloženými adresami a kontejnery. 
 
 ### Formát vstupního souboru
 Vstupní soubory jsou slovníky (formát geojson). 
-Vstupní soubory mají klíč "features". Pod tímto klíčet je pole. V každém prvku pole je další slovník, který obsahuje klíče "properties" a "geometry". Pod klíčem "geometry" je další slovník s informacemi o adrese. Pod klíčem "geometry" se nachází další slovník s klíčem "coordinates", ve kterém se nachází pole se souřadnicemi.<br/>
+Program předpokládá, že ve vstupním souboru je pod klíčem 'features' pole. V každém prvku pole je další slovník, který obsahuje klíče 'properties' a 'geometry'. Pod klíčem 'properties' je další slovník s informacemi o adrese/kontejneru. U souboru s adresama program využívá data pod klíčema 'addr:street' a 'addr:housenumber', u kontejnerů se jedná o klíče 'STATIONNAME' a 'PRISTUP'. Pod klíčem "geometry" se nachází další slovník s klíčem "coordinates", ve kterém se nachází pole se souřadnicemi.<br/>
 
 ### Parametry programu
 Pokud není dáno jinak, program hledá a načítá souboru s názvem adresy.geojson a kontejnery.geojson.<br/>
